@@ -74,6 +74,23 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 #npClassroom .np-progress span{display:block;height:100%;background:linear-gradient(90deg,#08a6ff,#00e0bd);width:0}
 #npClassroom .np-note{line-height:1.75;font-size:14px}
 
+
+/* NaukriPath Phase 4 Exam Zone */
+#npExamNav{position:fixed;left:14px;bottom:85px;z-index:9998;border:1px solid #48caff88;border-radius:30px;padding:13px 17px;background:linear-gradient(120deg,#183c83,#0878ef);color:white;font-weight:800;box-shadow:0 8px 25px #0878ef55}
+#npExamZone{padding:18px 14px 115px;min-height:75vh}
+#npExamZone .np4-panel{background:rgba(22,42,72,.85);border:1px solid #4775a055;border-radius:16px;padding:16px;margin:12px 0}
+#npExamZone .np4-title{font-size:25px;font-weight:900}
+#npExamZone .np4-muted{opacity:.76;font-size:13px;line-height:1.6}
+#npExamZone select{box-sizing:border-box;width:100%;padding:13px;border-radius:10px;border:1px solid #42658c;background:#10223c;color:white;margin:8px 0 14px}
+#npExamZone button{border:0;border-radius:10px;padding:11px 14px;background:linear-gradient(120deg,#0878ef,#00a9c8);color:white;font-weight:800;margin:4px}
+#npExamZone .np4-exam{padding:14px;border:1px solid #4775a055;border-radius:13px;margin:9px 0;background:#10223c}
+#npExamZone .np4-option{display:block;width:100%;text-align:left;margin:8px 0;padding:13px;background:#193657;border:1px solid #52749a;color:white;border-radius:10px}
+#npExamZone .np4-option:disabled{opacity:.85}
+#npExamZone .np4-stat{font-size:25px;font-weight:900;color:#62c9ff}
+#npExamZone .np4-timer{font-size:22px;font-weight:900;color:#69d8ff}
+#npExamZone .np4-bar{height:9px;border-radius:20px;background:#263d5b;overflow:hidden;margin:12px 0}
+#npExamZone .np4-bar span{display:block;height:100%;background:linear-gradient(90deg,#08a6ff,#00e0bd)}
+
 </style>
 </head>
 <body>
@@ -523,6 +540,166 @@ btn.onclick=function(){
 document.body.appendChild(btn);
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",npUpdateStudy);
 else npUpdateStudy();
+})();
+</script>
+
+
+<section class="section" id="npExamZone" style="display:none">
+ <div class="np4-title">🎯 Competitive Exam Zone</div>
+ <p class="np4-muted">SSC, Railway, UPSC aur Banking ke practice tests ek jagah.</p>
+
+ <div class="np4-panel" id="np4Home">
+  <h3>Choose Your Exam</h3>
+  <div class="np4-exam"><b>SSC</b><p class="np4-muted">General Awareness, Science, Polity and History</p><button onclick="np4Start('SSC')">Start SSC Test</button></div>
+  <div class="np4-exam"><b>Railway</b><p class="np4-muted">Railway GK, General Science and Basic Awareness</p><button onclick="np4Start('Railway')">Start Railway Test</button></div>
+  <div class="np4-exam"><b>UPSC</b><p class="np4-muted">Polity, History, Geography and General Studies</p><button onclick="np4Start('UPSC')">Start UPSC Test</button></div>
+  <div class="np4-exam"><b>Banking</b><p class="np4-muted">Banking Awareness, Economy and Finance basics</p><button onclick="np4Start('Banking')">Start Banking Test</button></div>
+  <p class="np4-muted">Starter practice bank: 5 questions per exam. This is not an official previous-year paper.</p>
+ </div>
+
+ <div class="np4-panel" id="np4Quiz" style="display:none">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+   <b id="np4ExamName">Mock Test</b>
+   <span class="np4-timer" id="np4Timer">05:00</span>
+  </div>
+  <div class="np4-bar"><span id="np4QuizBar" style="width:0%"></span></div>
+  <p class="np4-muted" id="np4QuestionNo"></p>
+  <h3 id="np4Question"></h3>
+  <div id="np4Options"></div>
+  <p class="np4-muted">Correct: +1 | Wrong: -0.25 | Skipped: 0 | Minimum score: 0</p>
+  <button onclick="np4Next()">Next Question →</button>
+  <button onclick="np4Finish()">Submit Test</button>
+ </div>
+
+ <div class="np4-panel" id="np4Result" style="display:none">
+  <h3>🏆 Test Result</h3>
+  <div class="np4-stat" id="np4Score">0</div>
+  <p id="np4Summary"></p>
+  <div id="np4Review"></div>
+  <button onclick="np4Home()">Back to Exam Zone</button>
+ </div>
+
+ <div class="np4-panel">
+  <h3>📊 Student Performance Dashboard</h3>
+  <div style="display:flex;gap:25px;flex-wrap:wrap">
+   <div><div class="np4-stat" id="np4Attempts">0</div><small>Tests Attempted</small></div>
+   <div><div class="np4-stat" id="np4Best">0</div><small>Best Score</small></div>
+   <div><div class="np4-stat" id="np4Average">0</div><small>Average Score</small></div>
+  </div>
+  <h4>Recent Test History</h4>
+  <div id="np4History" class="np4-muted"></div>
+  <p class="np4-muted">Test history is stored locally on this device only.</p>
+ </div>
+</section>
+
+
+<script>
+/* NP_PHASE4_EXAM_TESTS */
+(function(){
+"use strict";
+
+const BANK={
+"SSC":[
+ {q:"Bharat ka Samvidhan kab apnaya gaya tha?",o:["15 August 1947","26 November 1949","26 January 1950","2 October 1950"],a:1,e:"Samvidhan Sabha ne 26 November 1949 ko Samvidhan adopt kiya tha."},
+ {q:"Solar System ka sabse bada grah kaun sa hai?",o:["Earth","Mars","Jupiter","Venus"],a:2,e:"Jupiter Solar System ka sabse bada planet hai."},
+ {q:"1 Byte mein kitne bits hote hain?",o:["4","8","16","32"],a:1,e:"1 Byte mein 8 bits hote hain."},
+ {q:"Battle of Plassey kis saal hui thi?",o:["1757","1764","1857","1707"],a:0,e:"Battle of Plassey 1757 mein hui thi."},
+ {q:"Bharatiya Samvidhan ka Article 21 kis adhikar se sambandhit hai?",o:["Equality","Freedom of Religion","Life and Personal Liberty","Education only"],a:2,e:"Article 21 life aur personal liberty ki protection deta hai."}
+],
+"Railway":[
+ {q:"Bharat ki pehli passenger train kab chali thi?",o:["1853","1869","1885","1901"],a:0,e:"Pehli passenger train 16 April 1853 ko Bombay se Thane ke beech chali thi."},
+ {q:"Force ki SI unit kya hai?",o:["Joule","Watt","Newton","Pascal"],a:2,e:"Force ki SI unit Newton hai."},
+ {q:"Indian Broad Gauge ki chaudai kitni hai?",o:["1000 mm","1435 mm","1676 mm","2000 mm"],a:2,e:"Indian Broad Gauge track ki width 1676 mm hoti hai."},
+ {q:"Vitamin C ki kami se kaunsa rog hota hai?",o:["Rickets","Scurvy","Beriberi","Night blindness"],a:1,e:"Vitamin C deficiency se scurvy hota hai."},
+ {q:"Indian Railways ka headquarters kahan hai?",o:["Mumbai","Kolkata","New Delhi","Chennai"],a:2,e:"Indian Railways ka headquarters New Delhi mein hai."}
+],
+"UPSC":[
+ {q:"Constitutional Remedies ka adhikar kis Article mein hai?",o:["Article 14","Article 19","Article 21","Article 32"],a:3,e:"Article 32 ko Dr. Ambedkar ne Constitution ka heart and soul kaha tha."},
+ {q:"Dandi March kis varsh shuru hua tha?",o:["1920","1930","1942","1947"],a:1,e:"Mahatma Gandhi ne 12 March 1930 ko Dandi March shuru kiya."},
+ {q:"Tropic of Cancer Bharat ke kitne rajyon se guzarti hai?",o:["6","7","8","9"],a:2,e:"Kark Rekha Bharat ke 8 rajyon se guzarti hai."},
+ {q:"Finance Commission ka provision kis Article mein hai?",o:["Article 280","Article 324","Article 356","Article 370"],a:0,e:"Finance Commission ka provision Article 280 mein hai."},
+ {q:"Panchayati Raj ko constitutional status kis amendment se mila?",o:["42nd","44th","73rd","74th"],a:2,e:"73rd Constitutional Amendment Act, 1992 ne Panchayati Raj institutions ko constitutional status diya."}
+],
+"Banking":[
+ {q:"Reserve Bank of India ki sthapna kab hui?",o:["1930","1935","1947","1950"],a:1,e:"RBI ki sthapna 1 April 1935 ko hui thi."},
+ {q:"RBI ka headquarters kahan hai?",o:["New Delhi","Kolkata","Mumbai","Chennai"],a:2,e:"RBI ka central office Mumbai mein hai."},
+ {q:"Repo Rate ka sambandh kis se hai?",o:["RBI ka banks ko loan dena","Income Tax","Export Duty","Savings Account"],a:0,e:"Repo rate woh rate hai jis par RBI eligible securities ke badle banks ko short-term funds deta hai."},
+ {q:"NEFT ka full form kya hai?",o:["National Electronic Funds Transfer","New Exchange Finance Transfer","National Easy Fund Tax","Net Electronic Finance Tool"],a:0,e:"NEFT ka full form National Electronic Funds Transfer hai."},
+ {q:"CRR ka full form kya hai?",o:["Cash Reserve Ratio","Credit Return Rate","Current Repo Ratio","Cash Revenue Rule"],a:0,e:"CRR Cash Reserve Ratio hai; banks ko apni NDTL ka prescribed hissa RBI ke paas cash balance ke roop mein rakhna hota hai."}
+]};
+
+const $=id=>document.getElementById(id);
+const STORE="np_phase4_test_history_v1";
+let history=[];
+try{history=JSON.parse(localStorage.getItem(STORE)||"[]");if(!Array.isArray(history))history=[]}catch(e){history=[]}
+let exam="",questions=[],answers=[],index=0,seconds=300,timer=null,finished=false;
+
+function saveHistory(){localStorage.setItem(STORE,JSON.stringify(history.slice(0,30)));np4Dashboard()}
+function fmt(n){return Math.floor(n/60).toString().padStart(2,"0")+":"+Math.floor(n%60).toString().padStart(2,"0")}
+
+window.np4Home=function(){
+ clearInterval(timer);timer=null;finished=true;
+ $("np4Home").style.display="block";$("np4Quiz").style.display="none";$("np4Result").style.display="none";
+ np4Dashboard();
+};
+window.np4Start=function(name){
+ exam=name;questions=BANK[name].slice().sort(()=>Math.random()-.5);answers=Array(questions.length).fill(null);index=0;seconds=300;finished=false;
+ $("np4Home").style.display="none";$("np4Result").style.display="none";$("np4Quiz").style.display="block";
+ $("np4ExamName").textContent=name+" Mock Test";
+ np4Render();
+ clearInterval(timer);
+ timer=setInterval(function(){seconds--;if($("np4Timer"))$("np4Timer").textContent=fmt(Math.max(0,seconds));if(seconds<=0)np4Finish()},1000);
+};
+function np4Render(){
+ if(finished)return;
+ const q=questions[index];
+ $("np4QuestionNo").textContent="Question "+(index+1)+" of "+questions.length;
+ $("np4Question").textContent=q.q;
+ $("np4QuizBar").style.width=(index/questions.length*100)+"%";
+ $("np4Options").innerHTML=q.o.map((op,i)=>{
+ const selected=answers[index]===i;
+ return '<button class="np4-option" '+(answers[index]!==null?'disabled':'')+' onclick="np4Answer('+i+')">'+String.fromCharCode(65+i)+'. '+op+(selected?' ✓':'')+'</button>';
+ }).join("");
+ $("np4Timer").textContent=fmt(seconds);
+}
+window.np4Answer=function(i){if(finished||answers[index]!==null)return;answers[index]=i;np4Render()};
+window.np4Next=function(){if(index<questions.length-1){index++;np4Render()}else np4Finish()};
+window.np4Finish=function(){
+ if(finished)return;
+ finished=true;clearInterval(timer);timer=null;
+ let correct=0,wrong=0,skipped=0;
+ questions.forEach((q,i)=>{if(answers[i]===null)skipped++;else if(answers[i]===q.a)correct++;else wrong++});
+ const score=Math.max(0,correct-wrong*.25);
+ const record={exam,correct,wrong,skipped,score:Number(score.toFixed(2)),date:new Date().toLocaleString()};
+ history.unshift(record);saveHistory();
+ $("np4Quiz").style.display="none";$("np4Result").style.display="block";
+ $("np4Score").textContent=record.score+" / "+questions.length;
+ $("np4Summary").textContent="Correct: "+correct+" | Wrong: "+wrong+" | Skipped: "+skipped+" | Accuracy: "+Math.round(correct/questions.length*100)+"%";
+ $("np4Review").innerHTML=questions.map((q,i)=>{
+ const yours=answers[i]===null?"Not answered":q.o[answers[i]];
+ return '<div class="np4-exam"><b>Q'+(i+1)+'. '+q.q+'</b><p>Your answer: '+yours+'</p><p>Correct answer: <b>'+q.o[q.a]+'</b></p><p class="np4-muted">'+q.e+'</p></div>';
+ }).join("");
+};
+window.np4Dashboard=function(){
+ const total=history.length;
+ const avg=total?history.reduce((s,x)=>s+x.score,0)/total:0;
+ $("np4Attempts").textContent=total;
+ $("np4Best").textContent=total?Math.max(...history.map(x=>x.score)):"0";
+ $("np4Average").textContent=avg.toFixed(2);
+ $("np4History").innerHTML=total?history.slice(0,8).map(x=>"<p><b>"+x.exam+"</b> — "+x.score+" points<br><small>"+x.date+" | Correct "+x.correct+", Wrong "+x.wrong+"</small></p>").join(""):"Abhi koi test attempt nahi hua hai.";
+};
+const nav=document.createElement("button");
+nav.id="npExamNav";nav.type="button";nav.textContent="🎯 Exam Zone";
+nav.onclick=function(){
+ if(typeof window.show==="function")window.show("npExamZone");
+ else{
+  document.querySelectorAll(".section").forEach(x=>{x.style.display="none";x.classList.remove("active")});
+  $("npExamZone").style.display="block";
+ }
+ np4Home();window.scrollTo({top:0,behavior:"smooth"});
+};
+document.body.appendChild(nav);
+np4Dashboard();
 })();
 </script>
 
