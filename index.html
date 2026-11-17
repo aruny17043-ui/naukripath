@@ -126,6 +126,20 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 #np6Learning h2,#np6Learning h3{color:#65dfff}
 #np6Timer{font-size:22px;font-weight:900;color:#65e4ff}
 
+
+/* NP_PHASE7_PHYSICS_BIOLOGY_V1 */
+#np7Lab{max-width:1000px;margin:auto;padding:18px 13px 100px}
+.np7-hero{padding:22px;border-radius:20px;background:linear-gradient(130deg,#10245c,#075d91,#06314d);color:white;border:1px solid #43c9ff}
+.np7-card{padding:16px;margin:12px 0;border-radius:16px;background:linear-gradient(145deg,#102b4d,#081c35);border:1px solid #28628c;color:#eef8ff}
+.np7-btn{padding:11px 15px;border:0;border-radius:10px;background:linear-gradient(120deg,#0876cf,#00a7d9);color:white;font-weight:800;margin:5px 3px}
+.np7-select{width:100%;box-sizing:border-box;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #3983ac;background:#061a31;color:white}
+.np7-option{display:block;width:100%;text-align:left;padding:13px;margin:8px 0;border-radius:11px;border:1px solid #34749d;background:#0b2847;color:white}
+.np7-option:disabled{opacity:.95}
+.np7-option.good{background:#104c43;border:2px solid #35d69b}
+.np7-option.bad{background:#552a39;border:2px solid #ff7777}
+.np7-note{background:repeating-linear-gradient(to bottom,#fff 0px,#fff 30px,#d8e8f6 31px);color:#142c46;border-radius:12px;padding:18px;line-height:1.9;white-space:pre-wrap;border-left:5px solid #2388c7}
+#np7Lab h2,#np7Lab h3{color:#65dfff}
+
 </style>
 </head>
 <body>
@@ -925,6 +939,7 @@ window.np5Clear=function(){
   <h2>🧪 Class 12 Chemistry</h2>
   <p>Chapter-wise Notes • MCQ Practice • Timed Tests</p>
   <p class="np6-muted">Content Pack 1 — Hindi + English learning support</p>
+<button class="np6-btn" onclick="np7Open()">📚 Open Physics & Biology Lab →</button>
  </div>
  <div class="np6-grid">
   <div class="np6-card"><h3 id="np6Total">20</h3><small>MCQ Questions</small></div>
@@ -1067,6 +1082,169 @@ window.np6History=function(){
 };
 $("np6Total").textContent=Q.length;$("np6Attempted").textContent=attempted.length;
 np6RenderBank();np6RenderNotes();np6History();
+})();
+</script>
+
+
+<section class="section" id="np7Lab" style="display:none">
+ <div class="np7-hero">
+  <span>NAUKRIPATH LEARNING LAB · PACK 2</span>
+  <h2>📚 Class 12 Physics & Biology</h2>
+  <p>Chapter Notes • Practice MCQ • Timed Tests</p>
+  <p>Hindi + English learning support</p>
+ </div>
+ <div class="np7-card">
+  <h3>Choose Subject</h3>
+  <select id="np7Subject" class="np7-select" onchange="np7Change()">
+   <option>Physics</option><option>Biology</option>
+  </select>
+  <div id="np7Stats"></div>
+ </div>
+ <div class="np7-card">
+  <h3>📖 Chapter Notes</h3>
+  <div id="np7NotesList"></div>
+  <div id="np7NoteView" class="np7-note" style="display:none;margin-top:12px"></div>
+ </div>
+ <div class="np7-card">
+  <h3>🧠 Practice Question Bank</h3>
+  <select id="np7Filter" class="np7-select" onchange="np7Render()">
+   <option value="All">All chapters</option>
+  </select>
+  <input id="np7Search" class="np7-select" placeholder="Search question..." oninput="np7Render()">
+  <div id="np7Questions"></div>
+ </div>
+ <div class="np7-card">
+  <h3>⏱️ Timed Test</h3>
+  <p>10 random questions · 10 minutes · +1 correct · -0.25 wrong</p>
+  <h2 id="np7Timer">10:00</h2>
+  <div id="np7Quiz"><button class="np7-btn" onclick="np7Start()">Start Test</button></div>
+ </div>
+ <div class="np7-card">
+  <h3>📊 Test History</h3>
+  <div id="np7History">No test completed yet.</div>
+ </div>
+ <button class="np7-btn" onclick="np7Back()">← Back to Chemistry Lab</button>
+</section>
+
+
+<script>
+/* NP_PHASE7_PHYSICS_BIOLOGY_V1 */
+(function(){
+"use strict";
+const DATA={
+Physics:{
+notes:[
+{c:"Electric Charges and Fields",v:"ELECTRIC CHARGES AND FIELDS — REVISION\n\n1. Charge is a basic property of matter. SI unit: coulomb (C).\n2. Like charges repel; unlike charges attract.\n3. Quantisation: q = ne, where e = 1.602 × 10⁻¹⁹ C.\n4. Coulomb's law: F = (1/4πε₀) |q₁q₂|/r².\n5. Electric field: E = F/q₀. SI unit: N C⁻¹.\n6. Electric field due to a point charge: E = (1/4πε₀) q/r².\n7. Electric dipole moment: p = q × 2a, directed from negative to positive charge.\n8. Gauss's law: ∮ E·dA = q enclosed / ε₀.\n9. Electric field lines never intersect.\n\nPractise field diagrams and Gauss-law applications."},
+{c:"Electrostatic Potential and Capacitance",v:"ELECTROSTATIC POTENTIAL & CAPACITANCE\n\n1. Electric potential: Work done per unit positive test charge.\n2. SI unit of potential: volt (V).\n3. Potential due to point charge: V = (1/4πε₀)q/r.\n4. Potential energy of two charges: U = (1/4πε₀)q₁q₂/r.\n5. Capacitance: C = Q/V. SI unit: farad (F).\n6. Parallel-plate capacitor: C = ε₀A/d (air/vacuum).\n7. Capacitors in parallel: C = C₁ + C₂ + ...\n8. Capacitors in series: 1/C = 1/C₁ + 1/C₂ + ...\n9. Energy stored: U = ½CV² = ½QV = Q²/(2C).\n\nCheck the effect of dielectric insertion in your textbook."}
+],
+questions:[
+["Electric Charges and Fields","The SI unit of electric charge is:",["Coulomb","Ampere","Volt","Ohm"],0,"Electric charge is measured in coulomb (C)."],
+["Electric Charges and Fields","The magnitude of charge on an electron is:",["1.6 × 10⁻¹⁹ C","1.6 × 10⁻¹⁶ C","9.1 × 10⁻³¹ C","6.02 × 10²³ C"],0,"The elementary charge magnitude is approximately 1.602 × 10⁻¹⁹ C."],
+["Electric Charges and Fields","Like electric charges:",["Attract","Repel","Always neutralise","Do not interact"],1,"Like charges repel, while unlike charges attract."],
+["Electric Charges and Fields","Coulomb force varies with distance r as:",["r","1/r","1/r²","r²"],2,"Coulomb's law follows the inverse-square relation."],
+["Electric Charges and Fields","The SI unit of electric field is:",["N/C","C/N","J/C²","Ohm"],0,"Electric field is force per unit charge, N/C."],
+["Electric Charges and Fields","Gauss's law relates electric flux to:",["Total mass","Enclosed charge","Temperature","Resistance"],1,"Net electric flux through a closed surface is enclosed charge divided by ε₀."],
+["Electrostatic Potential and Capacitance","The SI unit of electric potential is:",["Farad","Volt","Coulomb","Tesla"],1,"Potential difference is measured in volts."],
+["Electrostatic Potential and Capacitance","Capacitance is defined as:",["Q/V","V/Q","QV","Q+V"],0,"Capacitance C is charge stored per unit potential difference."],
+["Electrostatic Potential and Capacitance","The equivalent capacitance in parallel is:",["Always less than smallest","Sum of capacitances","Reciprocal sum","Zero"],1,"Parallel capacitances add directly."],
+["Electrostatic Potential and Capacitance","Energy stored in a capacitor is:",["CV²","½CV²","2CV²","C/V"],1,"Stored energy is U = ½CV²."],
+["Electrostatic Potential and Capacitance","The capacitance of a parallel-plate capacitor increases when:",["Plate area increases","Separation increases","Area decreases","Plates are removed"],0,"C = ε₀A/d; capacitance increases with plate area."],
+["Electrostatic Potential and Capacitance","The potential due to a point charge varies as:",["r","1/r","1/r²","r²"],1,"V = (1/4πε₀)q/r."]
+]},
+Biology:{
+notes:[
+{c:"Sexual Reproduction in Flowering Plants",v:"SEXUAL REPRODUCTION IN FLOWERING PLANTS\n\n1. The flower is the reproductive structure of angiosperms.\n2. Stamen is the male reproductive part; it consists of anther and filament.\n3. Pistil/carpel is the female reproductive part; it includes stigma, style and ovary.\n4. Pollen grains are formed in the anther.\n5. The embryo sac is the female gametophyte, usually seven-celled and eight-nucleate at maturity in the common Polygonum type.\n6. Pollination is transfer of pollen from anther to stigma.\n7. Double fertilisation is characteristic of angiosperms: syngamy and triple fusion.\n8. Ovule develops into seed; ovary develops into fruit.\n9. Endosperm commonly provides nourishment to the developing embryo.\n\nRevise labelled diagrams of anther and embryo sac."},
+{c:"Human Reproduction",v:"HUMAN REPRODUCTION — REVISION\n\n1. Testes produce sperm and secrete testosterone.\n2. Spermatogenesis occurs in seminiferous tubules.\n3. Ovaries produce ova and secrete oestrogen and progesterone.\n4. Oogenesis is the process of formation of female gametes.\n5. Fertilisation usually occurs in the ampullary-isthmic region of the fallopian tube.\n6. The zygote undergoes cleavage and forms a blastocyst.\n7. Implantation is attachment of the blastocyst to the uterine endometrium.\n8. Placenta helps in exchange of nutrients, gases and wastes between maternal and foetal blood (without their direct mixing under normal conditions).\n9. Parturition is childbirth; lactation is milk production and secretion.\n\nUse your prescribed textbook for menstrual-cycle stages and hormone details."}
+],
+questions:[
+["Sexual Reproduction in Flowering Plants","The male reproductive part of a flower is:",["Pistil","Stamen","Sepal","Petal"],1,"The stamen consists of anther and filament and is the male reproductive part."],
+["Sexual Reproduction in Flowering Plants","Pollen grains are produced in:",["Stigma","Ovary","Anther","Style"],2,"Pollen grains develop inside pollen sacs of the anther."],
+["Sexual Reproduction in Flowering Plants","Transfer of pollen from anther to stigma is called:",["Fertilisation","Pollination","Germination","Implantation"],1,"Pollination is the transfer of pollen grains to the stigma."],
+["Sexual Reproduction in Flowering Plants","Double fertilisation is a characteristic feature of:",["Algae","Bryophytes","Angiosperms","Fungi"],2,"Angiosperms show syngamy and triple fusion, together called double fertilisation."],
+["Sexual Reproduction in Flowering Plants","After fertilisation, the ovule generally develops into:",["Fruit","Seed","Stigma","Anther"],1,"The ovule develops into a seed; the ovary develops into a fruit."],
+["Sexual Reproduction in Flowering Plants","The female gametophyte in an angiosperm is commonly called:",["Embryo sac","Pollen tube","Endosperm","Cotyledon"],0,"The embryo sac is the female gametophyte within the ovule."],
+["Human Reproduction","Sperms are produced in:",["Ovaries","Seminiferous tubules","Uterus","Prostate only"],1,"Spermatogenesis takes place in seminiferous tubules of testes."],
+["Human Reproduction","The primary male sex hormone is:",["Oestrogen","Progesterone","Testosterone","Insulin"],2,"Testosterone is the principal androgen secreted by Leydig cells."],
+["Human Reproduction","In humans, fertilisation usually occurs in the:",["Uterus","Vagina","Ampullary-isthmic region","Cervix"],2,"The usual site is the ampullary-isthmic junction of the oviduct."],
+["Human Reproduction","Implantation is the attachment of:",["Sperm to ovum","Blastocyst to endometrium","Ovary to uterus","Placenta to cervix"],1,"The blastocyst attaches to the uterine endometrium during implantation."],
+["Human Reproduction","The organ that facilitates exchange between mother and foetus is:",["Kidney","Placenta","Pancreas","Liver"],1,"Placenta supports exchange of gases, nutrients and wastes."],
+["Human Reproduction","The process of childbirth is called:",["Ovulation","Parturition","Oogenesis","Lactation"],1,"Parturition refers to childbirth."]
+]}
+};
+const $=id=>document.getElementById(id);
+let current=[],quiz=[],index=0,correct=0,wrong=0,answered=false,left=600,timer=null;
+function subject(){return $("np7Subject").value}
+function allQuestions(){return DATA[subject()].questions}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function key(){return "np7_history_"+subject()}
+window.np7Change=function(){
+ clearInterval(timer);timer=null;
+ $("np7NoteView").style.display="none";
+ const chapters=[...new Set(allQuestions().map(q=>q[0]))];
+ $("np7Filter").innerHTML='<option value="All">All chapters</option>'+chapters.map(c=>`<option>${esc(c)}</option>`).join("");
+ $("np7Stats").innerHTML=`<b>${allQuestions().length} practice MCQ</b> · ${DATA[subject()].notes.length} chapter notes`;
+ $("np7NotesList").innerHTML=DATA[subject()].notes.map((n,i)=>`<button class="np7-btn" onclick="np7OpenNote(${i})">${esc(n.c)}</button>`).join("");
+ $("np7Quiz").innerHTML='<button class="np7-btn" onclick="np7Start()">Start Test</button>';
+ $("np7Timer").textContent="10:00";
+ np7Render();np7History();
+};
+window.np7OpenNote=function(i){
+ const n=DATA[subject()].notes[i];$("np7NoteView").style.display="block";$("np7NoteView").textContent=n.v;
+ $("np7NoteView").scrollIntoView({behavior:"smooth",block:"start"});
+};
+window.np7Render=function(){
+ const filter=$("np7Filter").value,search=$("np7Search").value.toLowerCase();
+ const list=allQuestions().map((q,i)=>({q,i})).filter(x=>(filter==="All"||x.q[0]===filter)&&x.q[1].toLowerCase().includes(search));
+ $("np7Questions").innerHTML=list.map(x=>`<div class="np7-card"><span>${esc(x.q[0])}</span><h3>${esc(x.q[1])}</h3><div>${x.q[2].map((o,j)=>`<button class="np7-option" onclick="np7Reveal(${x.i},${j},this)">${String.fromCharCode(65+j)}. ${esc(o)}</button>`).join("")}</div><p id="np7Exp${x.i}"></p></div>`).join("")||"No matching questions.";
+};
+window.np7Reveal=function(qi,oi,btn){
+ const q=allQuestions()[qi],exp=$("np7Exp"+qi);if(exp.dataset.done)return;exp.dataset.done="1";
+ btn.parentElement.querySelectorAll("button").forEach((b,j)=>{b.disabled=true;if(j===q[3])b.classList.add("good")});
+ if(oi!==q[3])btn.classList.add("bad");
+ exp.textContent=(oi===q[3]?"Correct! ":"Incorrect. ")+q[4];
+};
+function draw(){
+ const q=quiz[index];$("np7Quiz").innerHTML=`<p><b>Question ${index+1} / ${quiz.length}</b> · ${esc(q[0])}</p><h3>${esc(q[1])}</h3><div id="np7Options"></div><p id="np7Feedback"></p><button class="np7-btn" id="np7Next" disabled onclick="np7Next()">Next →</button>`;
+ q[2].forEach((o,j)=>{const b=document.createElement("button");b.className="np7-option";b.textContent=String.fromCharCode(65+j)+". "+o;b.onclick=()=>choose(j);$("np7Options").appendChild(b)});
+ answered=false;
+}
+function choose(j){
+ if(answered)return;answered=true;const q=quiz[index];
+ if(j===q[3])correct++;else wrong++;
+ document.querySelectorAll("#np7Options button").forEach((b,k)=>{b.disabled=true;if(k===q[3])b.classList.add("good");if(k===j&&j!==q[3])b.classList.add("bad")});
+ $("np7Feedback").textContent=(j===q[3]?"Correct! ":"Incorrect. ")+q[4];$("np7Next").disabled=false;
+}
+window.np7Start=function(){
+ clearInterval(timer);quiz=[...allQuestions()].sort(()=>Math.random()-.5).slice(0,10);
+ index=0;correct=0;wrong=0;left=600;draw();tick();timer=setInterval(tick,1000);
+};
+function tick(){
+ $("np7Timer").textContent=Math.floor(left/60)+":"+String(left%60).padStart(2,"0");
+ if(left<=0){finish();return;}left--;
+}
+window.np7Next=function(){if(!answered)return;index++;if(index>=quiz.length)finish();else draw()};
+function finish(){
+ clearInterval(timer);timer=null;const skipped=quiz.length-index-(answered?1:0);
+ const marks=Math.max(0,correct-wrong*.25);
+ const rec={date:new Date().toLocaleString(),correct,wrong,skipped,marks:marks.toFixed(2)};
+ const k=key(),history=JSON.parse(localStorage.getItem(k)||"[]");history.unshift(rec);localStorage.setItem(k,JSON.stringify(history.slice(0,20)));
+ $("np7Quiz").innerHTML=`<h3>Test Completed</h3><p>Correct: ${correct} · Wrong: ${wrong} · Unattempted: ${skipped}</p><h2>${rec.marks} / 10</h2><button class="np7-btn" onclick="np7Start()">Try Again</button>`;
+ np7History();
+}
+window.np7History=function(){
+ const h=JSON.parse(localStorage.getItem(key())||"[]");
+ $("np7History").innerHTML=h.length?h.slice(0,8).map(x=>`<p>${esc(x.date)} — <b>${x.marks}/10</b> · Correct ${x.correct} · Wrong ${x.wrong}</p>`).join(""):"No test completed yet.";
+};
+window.np7Open=function(){
+ document.querySelectorAll(".section").forEach(s=>{s.classList.remove("active");s.style.display="none"});
+ $("np7Lab").style.display="block";$("np7Lab").classList.add("active");window.scrollTo(0,0);np7Change();
+};
+window.np7Back=function(){
+ clearInterval(timer);
+ document.querySelectorAll(".section").forEach(s=>{s.classList.remove("active");s.style.display="none"});
+ $("np6Learning").style.display="block";$("np6Learning").classList.add("active");window.scrollTo(0,0);
+};
+np7Change();
 })();
 </script>
 
