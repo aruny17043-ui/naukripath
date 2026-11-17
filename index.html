@@ -640,10 +640,137 @@ window.npToggleDone=function(ch){
  const k=key(ch);if(done[k])delete done[k];else done[k]=true;
  localStorage.setItem(KEY,JSON.stringify(done));npRenderChapters();
 };
-window.npOpenNotes=function(ch){
- $("npChapterNotes").innerHTML='<h3>📝 '+esc(ch)+'</h3><p><b>Study checklist</b></p><ol><li>Read the chapter carefully from your prescribed textbook.</li><li>Write important definitions and concepts in your own words.</li><li>Practice textbook examples and exercise questions.</li><li>Prepare short and long answer questions.</li><li>Revise the chapter without looking at your notes.</li></ol><p class="np-muted">This is a general study guide, not official chapter notes. Verify topics with your current board textbook and syllabus.</p><button onclick="npToggleDone('+JSON.stringify(ch).replace(/"/g,'&quot;')+')">✓ Mark Complete / Undo</button>';
- $("npChapterNotes").scrollIntoView({behavior:"smooth",block:"start"});
+
+/* NP_STUDYROOM_REAL_NOTES_V1 */
+const NP_STUDY_NOTES = {
+ "12|Chemistry": {
+  "Solutions": `SOLUTIONS — QUICK REVISION
+
+1. Solution: A homogeneous mixture of two or more components.
+2. Molarity (M): Moles of solute / Volume of solution in litres.
+3. Molality (m): Moles of solute / Mass of solvent in kg.
+4. Mole fraction: Moles of a component / Total moles of all components.
+5. Raoult's law: pA = xA × pA° for an ideal solution.
+6. Colligative properties: Relative lowering of vapour pressure, elevation of boiling point, depression of freezing point and osmotic pressure.
+7. Osmotic pressure: π = CRT for dilute solutions.
+8. Molality and mole fraction are temperature independent; molarity depends on volume and temperature.
+
+Practice numerical problems using your prescribed textbook.`,
+  "Electrochemistry": `ELECTROCHEMISTRY — QUICK REVISION
+
+1. Oxidation occurs at anode; reduction occurs at cathode.
+2. Galvanic cell: Spontaneous chemical reaction produces electrical energy.
+3. Electrolytic cell: Electrical energy drives a non-spontaneous reaction.
+4. Standard hydrogen electrode: E° = 0.00 V by convention.
+5. Cell potential: E°cell = E°cathode − E°anode.
+6. Conductivity (κ): Reciprocal of resistivity.
+7. Molar conductivity: Λm = κ × 1000 / C when κ is in S cm⁻¹ and C in mol L⁻¹.
+8. Faraday constant ≈ 96485 C mol⁻¹.
+9. Nernst equation at 298 K: E = E° − (0.0591/n) log Q.
+
+Remember to check units carefully in numerical questions.`,
+  "Chemical Kinetics": `CHEMICAL KINETICS — QUICK REVISION
+
+1. Rate of reaction: Change in concentration per unit time.
+2. Rate law: Rate = k[A]^m[B]^n.
+3. Order: Sum of powers of concentration terms in the experimentally determined rate law.
+4. Zero-order integrated equation: [A]t = [A]0 − kt.
+5. First-order integrated equation: k = (2.303/t) log([A]0/[A]t).
+6. First-order half-life: t½ = 0.693/k.
+7. Units of k depend on reaction order.
+8. Arrhenius equation: k = A e^(−Ea/RT).
+9. A catalyst lowers activation energy; it does not change the equilibrium constant.
+
+Practise graphs and numerical problems from your prescribed textbook.`,
+  "Coordination Compounds": `COORDINATION COMPOUNDS — QUICK REVISION
+
+1. Coordination entity: Central metal atom/ion surrounded by ligands.
+2. Ligand: Ion or molecule donating an electron pair to the central metal.
+3. Coordination number: Number of donor atoms directly bonded to the metal.
+4. NH₃ = ammine; H₂O = aqua; CO = carbonyl; Cl⁻ = chlorido.
+5. en (ethane-1,2-diamine) is a bidentate ligand.
+6. Oxidation state is calculated using the overall charge and ligand charges.
+7. Coordination number 4: tetrahedral or square planar; 6: octahedral.
+8. Isomerism includes ionisation, linkage, coordination and stereoisomerism.
+9. Ligands are generally named alphabetically before the metal.
+
+Use your prescribed textbook for complete IUPAC naming practice.`
+ },
+ "12|Physics": {
+  "Electric Charges and Fields": `ELECTRIC CHARGES AND FIELDS — REVISION
+
+1. Charge is a basic property of matter. SI unit: coulomb (C).
+2. Like charges repel; unlike charges attract.
+3. Quantisation: q = ne, where e = 1.602 × 10⁻¹⁹ C.
+4. Coulomb's law: F = (1/4πε₀) |q₁q₂|/r².
+5. Electric field: E = F/q₀. SI unit: N C⁻¹.
+6. Field due to a point charge: E = (1/4πε₀) q/r².
+7. Electric dipole moment: p = q × 2a.
+8. Gauss's law: ∮ E·dA = q enclosed / ε₀.
+9. Electric field lines never intersect.
+
+Practise field diagrams and Gauss-law applications.`,
+  "Electrostatic Potential and Capacitance": `ELECTROSTATIC POTENTIAL & CAPACITANCE
+
+1. Electric potential: Work done per unit positive test charge.
+2. SI unit of potential: volt (V).
+3. Potential due to point charge: V = (1/4πε₀)q/r.
+4. Potential energy of two charges: U = (1/4πε₀)q₁q₂/r.
+5. Capacitance: C = Q/V. SI unit: farad (F).
+6. Parallel-plate capacitor: C = ε₀A/d (air/vacuum).
+7. Capacitors in parallel: C = C₁ + C₂ + ...
+8. Capacitors in series: 1/C = 1/C₁ + 1/C₂ + ...
+9. Energy stored: U = ½CV² = ½QV = Q²/(2C).
+
+Check the effect of dielectric insertion in your textbook.`
+ },
+ "12|Biology": {
+  "Sexual Reproduction in Flowering Plants": `SEXUAL REPRODUCTION IN FLOWERING PLANTS
+
+1. The flower is the reproductive structure of angiosperms.
+2. Stamen is the male reproductive part; it consists of anther and filament.
+3. Pistil/carpel is the female reproductive part; it includes stigma, style and ovary.
+4. Pollen grains are formed in the anther.
+5. The embryo sac is the female gametophyte, usually seven-celled and eight-nucleate at maturity in the common Polygonum type.
+6. Pollination is transfer of pollen from anther to stigma.
+7. Double fertilisation is characteristic of angiosperms: syngamy and triple fusion.
+8. Ovule develops into seed; ovary develops into fruit.
+9. Endosperm commonly provides nourishment to the developing embryo.
+
+Revise labelled diagrams of anther and embryo sac.`,
+  "Human Reproduction": `HUMAN REPRODUCTION — REVISION
+
+1. Testes produce sperm and secrete testosterone.
+2. Spermatogenesis occurs in seminiferous tubules.
+3. Ovaries produce ova and secrete oestrogen and progesterone.
+4. Oogenesis is the process of formation of female gametes.
+5. Fertilisation usually occurs in the ampullary-isthmic region of the fallopian tube.
+6. The zygote undergoes cleavage and forms a blastocyst.
+7. Implantation is attachment of the blastocyst to the uterine endometrium.
+8. Placenta helps in exchange of nutrients, gases and wastes between maternal and foetal blood.
+9. Parturition is childbirth; lactation is milk production and secretion.
+
+Use your prescribed textbook for menstrual-cycle stages and hormone details.`
+ }
 };
+
+window.npOpenNotes=function(ch){
+ const subjectKey=cl()+"|"+sub();
+ const note=(NP_STUDY_NOTES[subjectKey]||{})[ch];
+ const box=$("npChapterNotes");
+ const safe=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ let content;
+ if(note){
+  content='<div style="background:#fff;color:#18324d;border-radius:14px;padding:18px;line-height:1.9;white-space:pre-wrap;border-left:5px solid #159bd7;font-family:Georgia,serif">'+safe(note)+'</div>';
+  content+='<p class="np-muted">Revision notes · Check your current board textbook and syllabus for complete coverage.</p>';
+ }else{
+  content='<div style="padding:16px;border-radius:12px;background:#10223c"><b>📚 Notes are being prepared for this chapter.</b><p class="np-muted">Abhi is chapter ke verified revision notes NaukriPath par available nahi hain. Hum bina jaanch ki ya nakli material nahi dikhayenge.</p></div>';
+ }
+ box.innerHTML='<h3>📝 '+safe(ch)+'</h3>'+content+
+ '<button onclick="npToggleDone('+JSON.stringify(ch).replace(/"/g,'&quot;')+')">✓ Mark Complete / Undo</button>';
+ box.scrollIntoView({behavior:"smooth",block:"start"});
+};
+
 const btn=document.createElement("button");
 btn.id="npStudyRoomNav";btn.type="button";btn.textContent="📚 Study Room";
 btn.onclick=function(){
