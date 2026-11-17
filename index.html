@@ -1,126 +1,225 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#071b3b"><title>NaukriPath — Your Career. Your Future.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07152e">
+<meta name="description" content="NaukriPath - Government Jobs, Board Exams, Notes and Mock Tests">
+<title>NaukriPath – Your Career. Your Future.</title>
 <style>
-:root{--bg:#071b3b;--panel:#10294f;--panel2:#132f5b;--blue:#4b9cff;--cyan:#55d8ed;--text:#f3f7ff;--muted:#9fb2cf;--line:#29466e;--green:#55d6a0;--gold:#ffd27b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#174b83 0,transparent 34%),linear-gradient(180deg,#071b3b,#08152d 65%);color:var(--text);font-family:Inter,system-ui,-apple-system,"Noto Sans Devanagari",sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer;color:inherit}
-.app{max-width:760px;margin:auto;padding-bottom:94px}.topbar{padding:17px 17px 8px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#76dfff,#367cf5 55%,#6e68ff);display:grid;place-items:center;color:#061a39;font-size:23px;font-weight:1000;box-shadow:0 8px 25px #3d9dff55}.brandname{font-size:20px;font-weight:850;letter-spacing:-.5px}.tag{font-size:10px;color:#a9c8ed;letter-spacing:.8px}.top-actions{display:flex;gap:8px}.iconbtn{width:39px;height:39px;border:1px solid #42618a;background:#10294f;border-radius:13px;display:grid;place-items:center;font-size:17px;box-shadow:0 5px 15px #020b1c55}.hero{margin:13px 14px 0;padding:20px 18px 18px;border:1px solid #4e8bc477;border-radius:25px;background:linear-gradient(135deg,#174b83dd,#153466ee 58%,#222f71);box-shadow:0 16px 40px #020b1c66;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff20;border-radius:50%;right:-70px;top:-80px;box-shadow:0 0 0 22px #ffffff08,0 0 0 45px #ffffff06}.eyebrow{font-size:10px;color:#9deaff;letter-spacing:1.7px;font-weight:800}.hero h1{font-size:26px;line-height:1.24;margin:10px 0 8px;max-width:390px;letter-spacing:-.6px}.hero p{font-size:12px;color:#c3d8f4;margin:0;line-height:1.6}.search{display:flex;align-items:center;gap:8px;margin-top:18px;background:#f7fbff;border-radius:15px;padding:6px 7px 6px 13px;position:relative;z-index:1;box-shadow:0 8px 20px #03152d66}.search .glass{color:#64809f;font-size:17px}.search input{border:0;outline:0;min-width:0;flex:1;color:#122846;background:transparent;font-size:12px;padding:8px 0}.search button,.primary{border:0;background:linear-gradient(135deg,#54c9f2,#4386ff);color:#061a39;font-weight:850;border-radius:11px;padding:10px 14px;font-size:12px;box-shadow:0 5px 16px #287ee955;transition:.18s}.search button:active,.primary:active,.action:active,.nav:active{transform:scale(.96)}
-.content{padding:0 15px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.stat{border:1px solid #28476f;background:linear-gradient(145deg,#132e55,#0d2344);border-radius:16px;padding:12px 10px;box-shadow:0 8px 20px #020b1c35}.stat strong{display:block;font-size:17px}.stat span{font-size:10px;color:var(--muted)}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:22px 1px 11px}.sectionhead h2{font-size:15px;margin:0;letter-spacing:-.2px}.sub{font-size:10px;color:var(--muted)}.see{border:0;background:transparent;color:#78caff;font-size:11px;font-weight:750;padding:5px}
-.quickgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.tile{border:1px solid #294a75;background:linear-gradient(145deg,#142f58,#0d2343);border-radius:17px;padding:13px 8px 12px;text-align:center;min-height:94px;box-shadow:0 8px 18px #020b1c30;transition:.18s}.tile:active,.category:active{transform:translateY(2px) scale(.98)}.tile .glyph{width:39px;height:39px;margin:0 auto 8px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#265d96,#173c6b);font-size:19px;box-shadow:inset 0 1px #ffffff22}.tile b{display:block;font-size:11px}.tile small{display:block;color:#9db4d3;font-size:9px;margin-top:3px}.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.category{border:1px solid #2a4a72;background:#10294c;border-radius:13px;padding:11px 5px;font-size:11px;font-weight:750;color:#dbeaff;transition:.15s}.category.active{background:linear-gradient(120deg,#1e639f,#244b91);border-color:#68c9ff;color:#fff;box-shadow:0 0 0 2px #57baff22}
-.panel{border:1px solid #294a72;background:linear-gradient(145deg,#122d53,#0c2140);border-radius:18px;padding:14px;box-shadow:0 10px 25px #020b1c35}.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;font-size:10px;color:#a8bdd8;margin:0 0 6px}.field select{width:100%;border:1px solid #35577f;border-radius:11px;padding:10px;background:#0b2040;color:#eaf4ff;font-size:11px;outline:none}
-.view{display:none}.view.active{display:block}.job{border:1px solid #294a72;background:linear-gradient(145deg,#142f56,#0d2241);border-radius:17px;padding:14px;margin-bottom:10px;box-shadow:0 8px 20px #020b1c30}.jobrow{display:flex;gap:10px;align-items:flex-start}.jobicon{width:40px;height:40px;flex:none;border-radius:13px;background:linear-gradient(145deg,#2769a8,#203d79);display:grid;place-items:center;font-size:18px}.jobinfo{flex:1;min-width:0}.job h3{font-size:13px;margin:1px 0 5px}.job p{font-size:10px;color:#a9bdd7;margin:0;line-height:1.5}.tagdemo{font-size:9px;color:#ffd88e;border:1px solid #8e7040;background:#5d48231f;padding:4px 7px;border-radius:20px;white-space:nowrap}.jobbottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #294463;margin-top:12px;padding-top:10px}.jobbottom small{font-size:9px;color:#9eb3cf}.action{border:1px solid #397bb4;background:#163d69;color:#9cddff;border-radius:10px;padding:8px 11px;font-size:10px;font-weight:800;transition:.15s}.jobdetails{display:none;color:#b8cbe3;font-size:11px;line-height:1.6;border-top:1px dashed #355577;margin-top:10px;padding-top:10px}.job.open .jobdetails{display:block}.note{font-size:10px;color:#ffd88e;background:#46391e55;border:1px solid #80683b;border-radius:12px;padding:10px;line-height:1.5;margin:10px 0 0}.studygrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.studycard{border:1px solid #294a72;background:linear-gradient(145deg,#142f56,#0d2241);border-radius:15px;padding:13px}.studycard b{font-size:12px}.studycard p{font-size:10px;color:#a9bdd7;margin:5px 0 0}.option{display:block;width:100%;text-align:left;padding:12px;border:1px solid #345477;background:#0d2343;border-radius:12px;margin:8px 0;font-size:11px;color:#eaf4ff}.option.selected{border-color:#64caff;background:#174477}.result{font-size:11px;font-weight:800;margin-top:10px;color:var(--green)}.empty{color:#a9bdd7;text-align:center;padding:28px 14px;font-size:12px;line-height:1.6}
-.bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));background:#091b35ed;backdrop-filter:blur(18px);border-top:1px solid #294567}.nav{border:0;background:transparent;color:#829ab9;display:grid;justify-items:center;gap:3px;font-size:9px;min-width:53px;padding:3px 5px;transition:.15s}.nav .ni{font-size:18px;line-height:1.2}.nav.active{color:#73d8ff;font-weight:850}.nav.active .ni{filter:drop-shadow(0 0 7px #4cbaff)}
-.toast{position:fixed;left:50%;bottom:85px;transform:translate(-50%,15px);background:#e9f6ff;color:#102b4b;padding:10px 15px;border-radius:12px;font-size:11px;font-weight:750;opacity:0;pointer-events:none;transition:.2s;z-index:20;box-shadow:0 8px 25px #0005;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
-
-
-.savebtn{border:1px solid #42648b;background:#102c50;color:#a9c9e9;border-radius:10px;padding:8px 10px;font-size:10px;font-weight:800}
-.savebtn.saved{border-color:#328d79;background:#103d3a;color:#78e4c0}
-.jobactions{display:flex;gap:7px;align-items:center}
-.savedwrap{margin:10px 0 15px}
-.savedempty{border:1px dashed #35577d;border-radius:14px;padding:13px;color:#9fb7d4;font-size:10px;text-align:center}
-.portalgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.portal{border:1px solid #31577f;background:linear-gradient(145deg,#17375f,#0e2545);border-radius:15px;padding:12px;min-width:0}
-.portal .picon{width:34px;height:34px;border-radius:11px;background:#24558a;display:grid;place-items:center;font-size:16px;margin-bottom:8px}
-.portal b{font-size:11px;display:block}.portal small{font-size:9px;color:#9fb7d4;display:block;margin:4px 0 9px;line-height:1.4}
-.portal a{display:inline-block;text-decoration:none;border:1px solid #4388c2;background:#143e68;color:#a8e1ff;padding:7px 9px;border-radius:9px;font-size:10px;font-weight:800}
-@media(min-width:600px){.hero h1{font-size:32px}.quickgrid{grid-template-columns:repeat(5,1fr)}.categories{grid-template-columns:repeat(6,1fr)}}
-
-.adminpanel{margin-top:10px}.adminform{display:grid;gap:12px}.adminform input,.adminform select,.adminform textarea{width:100%;border:1px solid #34577f;background:#091d39;color:var(--text);border-radius:12px;padding:12px;outline:none}.adminform input:focus,.adminform select:focus,.adminform textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #55d8ed20}.adminform textarea{resize:vertical}.adminform .field{min-width:0}.adminform .primary{width:100%;border:0;border-radius:13px;padding:13px;background:linear-gradient(100deg,#398cff,#45d4e8);color:#061a39;font-weight:900}.job .jobdetails{white-space:normal;line-height:1.6}.taglocal{font-size:9px;font-weight:900;color:#6fe3b1;border:1px solid #3c9b7b;border-radius:7px;padding:4px 6px}.dangerbtn{border:1px solid #9a5361;background:#3b1b31;color:#ffb8c3;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:800}
+:root{--bg:#07152e;--panel:#102342;--card:#132b4c;--text:#f4f8ff;--muted:#9eb2d0;--blue:#168bff;--cyan:#20d5ed;--line:#294362}
+.light{--bg:#eef4fc;--panel:#fff;--card:#fff;--text:#10213b;--muted:#60728d;--line:#d5e0ef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
+header{padding:18px 16px;background:linear-gradient(120deg,#102d59,#087ed0);position:sticky;top:0;z-index:5}
+.brand{font-size:25px;font-weight:900;letter-spacing:.4px}
+.brand span{color:#4deaff}
+header p{margin:3px 0;color:#d9efff;font-size:12px}
+.actions{display:flex;gap:8px;margin-top:12px}
+input,select,button{font:inherit}
+input,select{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;width:100%;min-width:0}
+button{border:0;border-radius:12px;padding:11px 14px;background:linear-gradient(110deg,#087df5,#16c5df);color:white;font-weight:750;cursor:pointer}
+button.secondary{background:var(--card);border:1px solid var(--line);color:var(--text)}
+main{max-width:900px;margin:auto;padding:16px 14px 100px}
+.hero{padding:23px;border-radius:22px;background:linear-gradient(135deg,#123e78,#087fc4,#13aebc);margin-bottom:18px}
+.hero h1{font-size:27px;line-height:1.2;margin:0 0 9px}
+.hero p{margin:0 0 17px;color:#e2f5ff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.card{background:var(--card);border:1px solid var(--line);padding:15px;border-radius:17px;margin-bottom:11px}
+.tile{min-height:104px;cursor:pointer}
+.tile b{display:block;margin:8px 0 4px}
+.tile small,.muted{color:var(--muted)}
+.icon{font-size:25px}
+h2{font-size:19px;margin:22px 0 12px}
+h3{margin:0 0 8px;font-size:16px}
+.row{display:flex;gap:9px;align-items:center;justify-content:space-between}
+.section{display:none}
+.section.active{display:block}
+.list{display:grid;gap:10px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));z-index:9}
+nav button{background:transparent;color:var(--muted);padding:8px 5px;font-size:11px;flex:1}
+nav button.active{color:var(--cyan);background:var(--card)}
+.tag{font-size:11px;color:#5ce4ff;background:#123d5c;padding:4px 8px;border-radius:20px}
+.hidden{display:none}
+button:disabled{opacity:.5}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </style>
 </head>
 <body>
-<div class="app">
-<header class="topbar"><div class="brand"><div class="logo">N</div><div><div class="brandname">NaukriPath</div><div class="tag">YOUR CAREER. YOUR FUTURE.</div></div></div><div class="top-actions"><button class="iconbtn" id="notify" aria-label="Notifications">♧</button><button class="iconbtn" id="profile" aria-label="Profile">◉</button></div></header>
-<section class="hero"><div class="eyebrow">✦ YOUR NEXT CHAPTER STARTS HERE</div><h1>सपनों को लक्ष्य बनाओ.<br>सफलता की राह चुनो.</h1><p>Government Jobs • Exam Preparation • School Learning</p><div class="search"><span class="glass">⌕</span><input id="search" placeholder="Job, exam या subject खोजें..."><button id="searchBtn">Explore ↗</button></div></section>
-<main class="content">
-<section id="homeView" class="view active">
-<div class="stats"><div class="stat"><strong>01</strong><span>Career Hub</span></div><div class="stat"><strong>10th+</strong><span>School Classes</span></div><div class="stat"><strong>24/7</strong><span>Learn Anytime</span></div></div>
-<div class="sectionhead"><h2>✦ Explore NaukriPath</h2><span class="sub">QUICK ACCESS</span></div>
-<div class="quickgrid">
-<button class="tile" data-go="jobs"><span class="glyph">▣</span><b>Latest Jobs</b><small>नौकरी अपडेट</small></button>
-<button class="tile" data-go="admit"><span class="glyph">▤</span><b>Admit Card</b><small>प्रवेश पत्र</small></button>
-<button class="tile" data-go="results"><span class="glyph">✧</span><b>Results</b><small>रिजल्ट</small></button>
-<button class="tile" data-go="study"><span class="glyph">◫</span><b>Study Hub</b><small>Notes & Papers</small></button>
-<button class="tile" data-go="mock"><span class="glyph">✎</span><b>Mock Tests</b><small>अपनी तैयारी जांचें</small></button>
-</div>
-<div class="sectionhead"><h2>Popular Exam Categories</h2><span class="sub">FIND YOUR GOAL</span></div>
-<div class="categories"><button class="category" data-filter="SSC">SSC</button><button class="category" data-filter="Railway">Railway</button><button class="category" data-filter="Banking">Banking</button><button class="category" data-filter="UP Police">UP Police</button><button class="category" data-filter="UPSC">UPSC</button><button class="category" data-filter="Defence">Defence</button></div>
-<div class="sectionhead"><h2>School Learning Zone</h2><span class="sub">CLASS 10 & 12</span></div>
-<div class="panel"><div class="filters"><div class="field"><label>SELECT CLASS</label><select id="classSelect"><option>Class 10</option><option>Class 12</option></select></div><div class="field"><label>SELECT BOARD</label><select id="boardSelect"><option>UP Board</option><option>CBSE</option><option>ICSE</option><option>ISC</option></select></div></div><p class="sub" style="margin:12px 0 0">Board-wise notes, important questions & model papers.</p><button class="primary" style="margin-top:12px" data-go="study">Open Study Hub ↗</button></div>
-<div class="sectionhead"><h2>Fresh from Career Desk</h2><button class="see" data-go="jobs">View all →</button></div><div id="homeJobs"></div>
+<header>
+ <div class="brand">Naukri<span>Path</span></div>
+ <p>Your Career. Your Future.</p>
+ <div class="actions">
+  <input id="search" placeholder="Jobs, Notes, Exams खोजें..." oninput="searchAll(this.value)">
+  <button class="secondary" onclick="toggleTheme()">☀️</button>
+ </div>
+</header>
+
+<main>
+<section id="home" class="section active">
+ <div class="hero">
+  <span class="tag">YOUR CAREER PARTNER</span>
+  <h1>सपनों की नौकरी,<br>सफलता की तैयारी!</h1>
+  <p>Government Jobs, Board Exams, Notes और Mock Tests – सब एक जगह।</p>
+  <button onclick="show('jobs')">Explore Jobs →</button>
+  <button class="secondary" onclick="show('study')">Study Now</button>
+ </div>
+ <h2>Explore NaukriPath</h2>
+ <div class="grid">
+  <div class="card tile" onclick="show('jobs')"><span class="icon">💼</span><b>Government Jobs</b><small>Latest opportunities</small></div>
+  <div class="card tile" onclick="show('study')"><span class="icon">📚</span><b>Study Hub</b><small>Class 10 & 12</small></div>
+  <div class="card tile" onclick="show('tests')"><span class="icon">📝</span><b>Mock Tests</b><small>Practice & improve</small></div>
+  <div class="card tile" onclick="show('gk')"><span class="icon">🌍</span><b>Daily GK</b><small>Knowledge corner</small></div>
+  <div class="card tile" onclick="show('saved')"><span class="icon">🔖</span><b>Saved Jobs</b><small>Your bookmarks</small></div>
+  <div class="card tile" onclick="show('profile')"><span class="icon">👤</span><b>My Profile</b><small>Student dashboard</small></div>
+ </div>
+ <h2>Official Job Portals</h2>
+ <div class="list" id="official"></div>
 </section>
-<section id="jobsView" class="view"><div class="sectionhead"><h2>▣ Government Jobs</h2><span class="sub">CAREER DESK</span></div><div class="categories" style="margin-bottom:12px"><button class="category active" data-jobfilter="All">All</button><button class="category" data-jobfilter="SSC">SSC</button><button class="category" data-jobfilter="Railway">Railway</button><button class="category" data-jobfilter="UP Police">UP Police</button><button class="category" data-jobfilter="Banking">Banking</button><button class="category" data-jobfilter="UPSC">UPSC</button></div><div class="sectionhead savedwrap"><h2>🔖 Saved Jobs <span id="savedCount" class="sub">(0)</span></h2><button class="see" id="showSaved">View saved →</button></div><div id="savedList" class="savedwrap"></div><div class="sectionhead"><h2>All Listings</h2><span class="sub">SAMPLE DATA</span></div><div id="jobList"></div><div class="note">⚠️ ऊपर दी गई job cards केवल demo हैं, live vacancies नहीं। आवेदन करने से पहले संबंधित विभाग की official notification और तारीखें जरूर verify करें।</div>
-<div class="sectionhead"><h2>🔗 Official Recruitment Portals</h2><span class="sub">TRUSTED SOURCES</span></div>
-<div class="portalgrid">
-<div class="portal"><div class="picon">🏛️</div><b>SSC</b><small>Staff Selection Commission</small><a href="https://ssc.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">🇮🇳</div><b>UPSC</b><small>Union Public Service Commission</small><a href="https://upsc.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">🚆</div><b>Railway RRB</b><small>Railway recruitment information</small><a href="https://www.rrbcdg.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">🏦</div><b>IBPS</b><small>Banking recruitment exams</small><a href="https://www.ibps.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">📜</div><b>UPPSC</b><small>Uttar Pradesh Public Service Commission</small><a href="https://uppsc.up.nic.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">🗂️</div><b>UPSSSC</b><small>UP Subordinate Services Selection Commission</small><a href="https://upsssc.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">👮</div><b>UP Police</b><small>UP Police Recruitment & Promotion Board</small><a href="https://uppbpb.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-<div class="portal"><div class="picon">💼</div><b>National Career Service</b><small>Ministry of Labour & Employment</small><a href="https://www.ncs.gov.in/" target="_blank" rel="noopener">Visit Official ↗</a></div>
-</div>
-<div class="sectionhead"><h2>⚙️ Job Manager</h2><span class="sub">LOCAL ADMIN TOOL</span></div>
-<div class="panel adminpanel">
-  <p class="sub" style="margin-top:0">अपनी job listing जोड़ें — यह अभी केवल इसी मोबाइल और इसी browser में save होगी।</p>
-  <form id="jobForm" class="adminform">
-    <div class="field"><label>JOB TITLE *</label><input id="newTitle" required maxlength="90" placeholder="जैसे: UP Police Constable"></div>
-    <div class="field"><label>DEPARTMENT / ORGANISATION *</label><input id="newOrg" required maxlength="90" placeholder="जैसे: UP Police"></div>
-    <div class="filters">
-      <div class="field"><label>CATEGORY</label><select id="newCat"><option>SSC</option><option>Railway</option><option>UP Police</option><option>Banking</option><option>UPSC</option><option>Defence</option><option>Teaching</option><option>State Govt</option><option>Other</option></select></div>
-      <div class="field"><label>OFFICIAL WEBSITE</label><input id="newUrl" type="url" placeholder="https://example.gov.in"></div>
-    </div>
-    <div class="field"><label>DETAILS / NOTE</label><textarea id="newDetail" rows="3" maxlength="500" placeholder="Eligibility, dates आदि — केवल verified जानकारी लिखें"></textarea></div>
-    <button class="primary" type="submit">＋ Add Job Listing</button>
-  </form>
-  <div class="note" style="margin-bottom:0">ध्यान दें: यह सुरक्षित multi-user admin या public publishing नहीं है। असली portal में सभी users को updates दिखाने के लिए बाद में backend/database चाहिए।</div>
-</div><div class="note">🔒 सुरक्षा: आवेदन, फीस और दस्तावेज़ केवल संबंधित official portal पर ही जमा करें। NaukriPath किसी भर्ती संस्था की official website नहीं है।</div></section>
-<section id="admitView" class="view"><div class="sectionhead"><h2>▤ Admit Card Centre</h2></div><div class="panel empty">अभी कोई verified live admit-card update उपलब्ध नहीं है। अगली update में official links जोड़े जाएंगे।</div></section>
-<section id="resultsView" class="view"><div class="sectionhead"><h2>✧ Result Centre</h2></div><div class="panel empty">अभी कोई verified live result update उपलब्ध नहीं है। गलत जानकारी से बचने के लिए केवल official results जोड़े जाएंगे।</div></section>
-<section id="studyView" class="view"><div class="sectionhead"><h2>◫ Study Hub</h2><span class="sub">BOARD-WISE LEARNING</span></div><div class="panel"><div class="filters"><div class="field"><label>CLASS</label><select id="studyClass"><option>Class 10</option><option>Class 12</option></select></div><div class="field"><label>BOARD</label><select id="studyBoard"><option>UP Board</option><option>CBSE</option><option>ICSE</option><option>ISC</option></select></div></div></div><div class="sectionhead"><h2>Choose a subject</h2></div><div class="studygrid"><div class="studycard"><b>📐 Mathematics</b><p>Notes • Important Questions</p></div><div class="studycard"><b>🧪 Science</b><p>Chapter-wise revision</p></div><div class="studycard"><b>📖 English</b><p>Grammar • Practice</p></div><div class="studycard"><b>⚗️ Chemistry</b><p>Concepts • Numericals</p></div><div class="studycard"><b>⚡ Physics</b><p>Formula • Numericals</p></div><div class="studycard"><b>🧬 Biology</b><p>Diagrams • Revision</p></div></div></section>
-<section id="mockView" class="view"><div class="sectionhead"><h2>✎ Quick Mock Test</h2><span class="sub">SAMPLE QUIZ</span></div><div class="panel"><p class="sub">GENERAL KNOWLEDGE • QUESTION 01</p><div style="font-size:15px;font-weight:800;line-height:1.5;margin:10px 0">भारत का संविधान कब लागू हुआ था?</div><button class="option" data-a="wrong">15 अगस्त 1947</button><button class="option" data-a="correct">26 जनवरी 1950</button><button class="option" data-a="wrong">26 नवंबर 1949</button><button class="option" data-a="wrong">2 अक्टूबर 1950</button><div id="quizResult" class="result"></div></div></section>
-</main></div>
-<nav class="bottomnav"><button class="nav active" data-view="home"><span class="ni">⌂</span>Home</button><button class="nav" data-view="jobs"><span class="ni">▣</span>Jobs</button><button class="nav" data-view="study"><span class="ni">◫</span>Study</button><button class="nav" data-view="mock"><span class="ni">✎</span>Mock</button><button class="nav" data-view="results"><span class="ni">✧</span>Results</button></nav><div class="toast" id="toast"></div>
+
+<section id="jobs" class="section">
+ <h2>💼 Government Jobs</h2>
+ <p class="muted">नीचे दिए गए उदाहरण DEMO हैं, वास्तविक भर्ती की घोषणा नहीं।</p>
+ <select id="jobFilter" onchange="renderJobs()">
+  <option value="All">All Categories</option>
+  <option>SSC</option><option>Railway</option><option>UP Police</option>
+  <option>UPPSC</option><option>Banking</option><option>UPSC</option>
+ </select>
+ <div id="jobList" class="list" style="margin-top:12px"></div>
+</section>
+
+<section id="study" class="section">
+ <h2>📚 Study Hub</h2>
+ <div class="card">
+  <label>Class चुनें</label>
+  <select id="classSelect" onchange="updateBoards()"><option>Class 10</option><option>Class 12</option></select>
+  <label>Board चुनें</label>
+  <select id="boardSelect"><option>UP Board</option><option>CBSE</option><option>ICSE</option></select>
+  <label>Subject चुनें</label>
+  <select id="subjectSelect"><option>Mathematics</option><option>Science</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option><option>Hindi</option><option>Social Science</option></select>
+  <button style="margin-top:12px" onclick="studySearch()">Open Study Material</button>
+ </div>
+ <div id="studyResult" class="card">अपनी Class, Board और Subject चुनें।</div>
+ <h3>Useful Study Resources</h3>
+ <div class="card">NCERT Textbooks – <a href="https://ncert.nic.in/textbook.php" target="_blank">Official NCERT</a></div>
+ <div class="card">UP Board – <a href="https://upmsp.edu.in/" target="_blank">Official Website</a></div>
+ </section>
+
+<section id="tests" class="section">
+ <h2>📝 Practice Mock Test</h2>
+ <div class="card">
+  <div class="row"><b>General Knowledge Quiz</b><span class="tag" id="timer">05:00</span></div>
+  <p id="question">Start दबाकर टेस्ट शुरू करें।</p>
+  <div id="answers" class="list"></div>
+  <p id="testResult" class="muted"></p>
+  <button id="startTest" onclick="startTest()">Start Test</button>
+  <button id="nextTest" class="hidden" onclick="nextQuestion()">Next Question</button>
+ </div>
+</section>
+
+<section id="gk" class="section">
+ <h2>🌍 Daily GK</h2>
+ <div class="card"><span class="tag">STATIC GK</span><h3>भारत का संविधान</h3><p>भारतीय संविधान 26 जनवरी 1950 को लागू हुआ।</p></div>
+ <div class="card"><span class="tag">STATIC GK</span><h3>भारत की राजधानी</h3><p>नई दिल्ली भारत की राजधानी है।</p></div>
+ <p class="muted">ये सामान्य ज्ञान के उदाहरण हैं, आज की सत्यापित Current Affairs नहीं।</p>
+ <a href="https://pib.gov.in/" target="_blank">Official PIB News</a>
+ </section>
+
+<section id="saved" class="section"><h2>🔖 Saved Jobs</h2><div id="savedList" class="list"></div></section>
+
+<section id="profile" class="section">
+ <h2>👤 Student Profile</h2>
+ <div class="card">
+  <label>Your Name</label><input id="studentName" placeholder="अपना नाम लिखें">
+  <label style="display:block;margin-top:12px">Class / Exam</label><input id="studentExam" placeholder="Class 12 / SSC / UPSC">
+  <button style="margin-top:12px" onclick="saveProfile()">Save Profile</button>
+ </div>
+ <div class="card"><h3>My Progress</h3><p id="progress">अभी कोई टेस्ट नहीं दिया।</p></div>
+</section>
+
+<section id="admin" class="section">
+ <h2>⚙️ Local Job Manager</h2>
+ <p class="muted">यह केवल इसी डिवाइस का लोकल मैनेजर है, सुरक्षित ऑनलाइन Admin Panel नहीं।</p>
+ <div class="card">
+  <input id="newTitle" placeholder="Job title">
+  <select id="newCategory"><option>SSC</option><option>Railway</option><option>UP Police</option><option>UPPSC</option><option>Banking</option><option>UPSC</option></select>
+  <button style="margin-top:10px" onclick="addJob()">Add Local Job</button>
+ </div>
+ <button class="secondary" onclick="exportData()">Export Backup JSON</button>
+ <button class="secondary" onclick="document.getElementById('importFile').click()">Import Backup JSON</button>
+ <input id="importFile" type="file" accept=".json" class="hidden" onchange="importData(event)">
+ <div id="adminList" class="list" style="margin-top:12px"></div>
+</section>
+
+<footer>NaukriPath © 2026 · Learn • Prepare • Succeed<br>Verify every recruitment from its official notification.</footer>
+</main>
+
+<nav>
+ <button class="active" data-page="home" onclick="show('home')">⌂<br>Home</button>
+ <button data-page="jobs" onclick="show('jobs')">💼<br>Jobs</button>
+ <button data-page="study" onclick="show('study')">📚<br>Study</button>
+ <button data-page="tests" onclick="show('tests')">📝<br>Tests</button>
+ <button data-page="profile" onclick="show('profile')">👤<br>Profile</button>
+ <button data-page="admin" onclick="show('admin')">⚙️<br>Manage</button>
+</nav>
+
 <script>
-const views=['home','jobs','study','mock','admit','results'];let currentFilter='All';
-const jobs=[
-{id:'ssc-cgl',title:'SSC CGL — Sample Recruitment',org:'Staff Selection Commission',cat:'SSC',url:'https://ssc.gov.in/',detail:'यह केवल UI testing के लिए sample entry है। पद, योग्यता, आयु सीमा, फीस और dates की पुष्टि केवल SSC की नवीनतम official notification से करें।'},
-{id:'railway',title:'Railway Recruitment — Sample Alert',org:'Railway Recruitment Boards',cat:'Railway',url:'https://www.rrbcdg.gov.in/',detail:'यह demo entry है, कोई वास्तविक vacancy या आवेदन लिंक नहीं। अपने क्षेत्रीय RRB की official notification में पात्रता और तारीखें जांचें।'},
-{id:'up-police',title:'UP Police — Sample Recruitment',org:'Uttar Pradesh Police',cat:'UP Police',url:'https://uppbpb.gov.in/',detail:'यह demo entry है। पद, शारीरिक मानक, योग्यता और भर्ती की वास्तविक जानकारी UP Police Recruitment Board की official notification से ही जांचें।'},
-{id:'banking',title:'Banking Exams — Sample Alert',org:'Institute of Banking Personnel Selection',cat:'Banking',url:'https://www.ibps.in/',detail:'यह demo entry है। वास्तविक भर्ती के लिए IBPS या संबंधित बैंक की official notification देखें।'},
-{id:'upsc',title:'Civil Services — Sample Alert',org:'Union Public Service Commission',cat:'UPSC',url:'https://upsc.gov.in/',detail:'यह demo entry है। परीक्षा calendar, eligibility और notification UPSC की official website पर verify करें।'}
+const official=[
+ ["SSC","https://ssc.gov.in/"],["UPSC","https://upsc.gov.in/"],
+ ["Railway RRB","https://indianrailways.gov.in/"],["IBPS","https://www.ibps.in/"],
+ ["UPPSC","https://uppsc.up.nic.in/"],["UPSSSC","https://upsssc.gov.in/"],
+ ["UP Police","https://uppbpb.gov.in/"],["National Career Service","https://www.ncs.gov.in/"]
 ];
-let savedIds=[];
-let customJobs=[];
-try{customJobs=JSON.parse(localStorage.getItem('naukripath_custom_jobs')||'[]');if(!Array.isArray(customJobs))customJobs=[]}catch(e){customJobs=[]}
-function saveCustomJobs(){try{localStorage.setItem('naukripath_custom_jobs',JSON.stringify(customJobs))}catch(e){toast('Storage full या unavailable है।')}}
-function allJobs(){return [...jobs,...customJobs]}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
-try{savedIds=JSON.parse(localStorage.getItem('naukripath_saved_jobs')||'[]')}catch(e){savedIds=[]}
-function saveJobs(){try{localStorage.setItem('naukripath_saved_jobs',JSON.stringify(savedIds))}catch(e){toast('इस browser में save सुविधा उपलब्ध नहीं है।')}}
-function card(j){const isSaved=savedIds.includes(j.id);const local=!!j.local;const safeUrl=/^https:\/\//i.test(j.url||'')?j.url:'';return `<article class="job"><div class="jobrow"><div class="jobicon">✦</div><div class="jobinfo"><h3>${esc(j.title)}</h3><p>${esc(j.org)} · ${esc(j.cat)}</p></div><span class="${local?'taglocal':'tagdemo'}">${local?'LOCAL':'DEMO'}</span></div><div class="jobbottom"><small>${local?'आपकी जोड़ी हुई listing':'Official details verify करें'}</small><div class="jobactions"><button class="savebtn ${isSaved?'saved':''}" data-save="${esc(j.id)}">${isSaved?'✓ Saved':'＋ Save'}</button><button class="action" onclick="this.closest('.job').classList.toggle('open');this.textContent=this.closest('.job').classList.contains('open')?'Close −':'Details ↗'">Details ↗</button>${local?`<button class="dangerbtn" data-delete="${esc(j.id)}">Delete</button>`:''}</div></div><div class="jobdetails">${esc(j.detail||'अधिक जानकारी उपलब्ध नहीं है।')}<br>${safeUrl?`<a href="${esc(safeUrl)}" target="_blank" rel="noopener" style="display:inline-block;margin-top:9px;color:#8edaff;font-weight:800">Official website ↗</a>`:'<span class="sub">Official link अभी नहीं जोड़ा गया।</span>'}</div></article>`}
-function bindSaveButtons(){document.querySelectorAll('[data-save]').forEach(b=>b.onclick=()=>{const id=b.dataset.save;savedIds=savedIds.includes(id)?savedIds.filter(x=>x!==id):[...savedIds,id];saveJobs();render(currentFilter==='All'?allJobs():allJobs().filter(j=>j.cat===currentFilter));renderSaved();document.getElementById('homeJobs').innerHTML=allJobs().slice(0,2).map(card).join('');bindSaveButtons();toast(savedIds.includes(id)?'Job saved!':'Saved job हटाई गई।')})}
-function render(list){document.getElementById('jobList').innerHTML=list.length?list.map(card).join(''):'<div class="panel empty">इस category में कोई listing नहीं मिली।</div>';bindSaveButtons();bindDeleteButtons()}
-function renderSaved(){const list=allJobs().filter(j=>savedIds.includes(j.id));document.getElementById('savedCount').textContent='('+list.length+')';document.getElementById('savedList').innerHTML=list.length?list.map(card).join(''):'<div class="savedempty">अभी कोई job save नहीं की गई। पसंदीदा job पर ＋ Save दबाएं।</div>';bindSaveButtons()}
-render(allJobs());document.getElementById('homeJobs').innerHTML=allJobs().slice(0,2).map(card).join('');renderSaved();
-function filterJobs(f){currentFilter=f;document.querySelectorAll('[data-jobfilter]').forEach(b=>b.classList.toggle('active',b.dataset.jobfilter===f));render(f==='All'?allJobs():allJobs().filter(j=>j.cat===f));go('jobs')}
-render(allJobs());document.getElementById('homeJobs').innerHTML=allJobs().slice(0,2).map(card).join('');
-document.querySelectorAll('[data-jobfilter]').forEach(b=>b.onclick=()=>filterJobs(b.dataset.jobfilter));
-document.getElementById('showSaved').onclick=()=>{document.getElementById('savedList').scrollIntoView({behavior:'smooth',block:'start'});toast('आपकी saved jobs यहाँ हैं।')};
-document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>filterJobs(b.dataset.filter));
-function search(){let q=document.getElementById('search').value.trim().toLowerCase();let found=allJobs().filter(j=>(j.title+' '+j.org+' '+j.cat).toLowerCase().includes(q));render(found);go('jobs');document.querySelectorAll('[data-jobfilter]').forEach(b=>b.classList.toggle('active',b.dataset.jobfilter==='All'));if(!q)render(allJobs())}
-document.getElementById('searchBtn').onclick=search;document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter')search()});
-document.querySelectorAll('.option').forEach(b=>b.onclick=()=>{document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');let r=document.getElementById('quizResult');r.textContent=b.dataset.a==='correct'?'✓ बिल्कुल सही! शाबाश!':'फिर कोशिश करो। सही उत्तर: 26 जनवरी 1950';r.style.color=b.dataset.a==='correct'?'#55d6a0':'#ffd27b'});
-document.getElementById('notify').onclick=()=>toast('Notifications feature अगली update में आएगा।');document.getElementById('profile').onclick=()=>toast('Profile feature अगली update में आएगा।');
-document.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>toast('Selection updated: '+s.value)));
-
-function bindDeleteButtons(){document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{const id=b.dataset.delete;customJobs=customJobs.filter(j=>j.id!==id);savedIds=savedIds.filter(x=>x!==id);saveCustomJobs();saveJobs();render(currentFilter==='All'?allJobs():allJobs().filter(j=>j.cat===currentFilter));renderSaved();document.getElementById('homeJobs').innerHTML=allJobs().slice(0,2).map(card).join('');toast('Local listing delete हो गई।')})}
-const jobForm=document.getElementById('jobForm');
-if(jobForm)jobForm.addEventListener('submit',e=>{e.preventDefault();const title=document.getElementById('newTitle').value.trim(),org=document.getElementById('newOrg').value.trim(),rawUrl=document.getElementById('newUrl').value.trim();if(!title||!org){toast('Job title और department भरें।');return}if(rawUrl&&!/^https:\/\/\//i.test(rawUrl)){toast('Official link https:// से शुरू होना चाहिए।');return}const id='local-'+Date.now();customJobs.unshift({id,title,org,cat:document.getElementById('newCat').value,url:rawUrl,detail:document.getElementById('newDetail').value.trim()||'कोई अतिरिक्त जानकारी नहीं दी गई।',local:true});saveCustomJobs();render(currentFilter==='All'?allJobs():allJobs().filter(j=>j.cat===currentFilter));renderSaved();document.getElementById('homeJobs').innerHTML=allJobs().slice(0,2).map(card).join('');jobForm.reset();toast('आपकी listing इसी browser में save हो गई।')});
-
+const demo=[
+ {id:1,title:"SSC CGL – Example Listing",category:"SSC"},
+ {id:2,title:"Railway Recruitment – Example Listing",category:"Railway"},
+ {id:3,title:"UP Police – Example Listing",category:"UP Police"},
+ {id:4,title:"UPPSC – Example Listing",category:"UPPSC"},
+ {id:5,title:"Banking Exam – Example Listing",category:"Banking"},
+ {id:6,title:"UPSC – Example Listing",category:"UPSC"}
+];
+let jobs=JSON.parse(localStorage.getItem("np_jobs")||"null")||demo;
+let saved=JSON.parse(localStorage.getItem("np_saved")||"[]");
+function persist(){localStorage.setItem("np_jobs",JSON.stringify(jobs));localStorage.setItem("np_saved",JSON.stringify(saved))}
+function show(id){
+ document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===id));
+ if(id==="saved")renderSaved();if(id==="admin")renderAdmin();
+ window.scrollTo(0,0);
+}
+function renderOfficial(){document.getElementById("official").innerHTML=official.map(x=>`<div class="card row"><b>${x[0]}</b><a href="${x[1]}" target="_blank">Official Website ↗</a></div>`).join("")}
+function renderJobs(){
+ let f=document.getElementById("jobFilter").value;
+ let arr=jobs.filter(j=>f==="All"||j.category===f);
+ document.getElementById("jobList").innerHTML=arr.map(j=>`<div class="card"><span class="tag">${j.category}</span><h3>${j.title}</h3><p class="muted">DEMO / Local listing. Apply करने से पहले official notification जाँचें।</p><button onclick="toggleSave(${j.id})">${saved.includes(j.id)?"Saved ✓":"Save Job 🔖"}</button></div>`).join("")||"कोई Job नहीं मिली।";
+}
+function toggleSave(id){saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];persist();renderJobs();renderSaved()}
+function renderSaved(){document.getElementById("savedList").innerHTML=jobs.filter(j=>saved.includes(j.id)).map(j=>`<div class="card"><b>${j.title}</b><button class="secondary" onclick="toggleSave(${j.id})">Remove</button></div>`).join("")||"<p class='muted'>अभी कोई saved job नहीं।</p>"}
+function updateBoards(){let c=document.getElementById("classSelect").value;document.getElementById("boardSelect").innerHTML=(c==="Class 10"?["UP Board","CBSE","ICSE"]:["UP Board","CBSE","ISC"]).map(x=>`<option>${x}</option>`).join("")}
+function studySearch(){let c=document.getElementById("classSelect").value,b=document.getElementById("boardSelect").value,s=document.getElementById("subjectSelect").value;document.getElementById("studyResult").innerHTML=`<b>${c} · ${b} · ${s}</b><p class="muted">इस विषय की सामग्री जल्द जोड़ी जाएगी। फिलहाल आधिकारिक पाठ्यपुस्तकें देखें।</p><a href="https://ncert.nic.in/textbook.php" target="_blank">NCERT Textbooks ↗</a>`}
+function saveProfile(){localStorage.setItem("np_name",studentName.value);localStorage.setItem("np_exam",studentExam.value);alert("Profile इस डिवाइस पर सेव हो गई।")}
+studentName.value=localStorage.getItem("np_name")||"";studentExam.value=localStorage.getItem("np_exam")||"";
+function addJob(){let t=newTitle.value.trim();if(!t)return alert("Job title लिखें");jobs.unshift({id:Date.now(),title:t,category:newCategory.value});persist();newTitle.value="";renderJobs();renderAdmin()}
+function renderAdmin(){document.getElementById("adminList").innerHTML=jobs.map(j=>`<div class="card row"><span>${j.title}</span><button onclick="deleteJob(${j.id})">Delete</button></div>`).join("")}
+function deleteJob(id){jobs=jobs.filter(j=>j.id!==id);saved=saved.filter(x=>x!==id);persist();renderAdmin();renderJobs()}
+function exportData(){let blob=new Blob([JSON.stringify({jobs,saved},null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="naukripath-backup.json";a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d.jobs)||!Array.isArray(d.saved))throw 0;jobs=d.jobs;saved=d.saved;persist();renderAdmin();renderJobs();alert("Backup imported")}catch(x){alert("Invalid backup file")}};r.readAsText(e.target.files[0])}
+function toggleTheme(){document.body.classList.toggle("light");localStorage.setItem("np_light",document.body.classList.contains("light"))}
+if(localStorage.getItem("np_light")==="true")document.body.classList.add("light");
+const questions=[
+ ["भारत का संविधान कब लागू हुआ?",["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],1,"संविधान 26 जनवरी 1950 को लागू हुआ।"],
+ ["भारत की राजधानी क्या है?",["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],1,"भारत की राजधानी नई दिल्ली है।"],
+ ["भारत का राष्ट्रीय पशु कौन है?",["शेर","हाथी","बाघ","हिरण"],2,"भारत का राष्ट्रीय पशु बाघ है।"]
+];
+let qi=0,score=0,clock=null,remaining=300,answered=false;
+function startTest(){qi=0;score=0;remaining=300;document.getElementById("startTest").classList.add("hidden");document.getElementById("nextTest").classList.remove("hidden");loadQuestion();clearInterval(clock);clock=setInterval(()=>{remaining--;document.getElementById("timer").textContent=Math.floor(remaining/60)+":"+String(remaining%60).padStart(2,"0");if(remaining<=0)finishTest()},1000)}
+function loadQuestion(){answered=false;let q=questions[qi];document.getElementById("question").textContent=(qi+1)+". "+q[0];document.getElementById("answers").innerHTML=q[1].map((a,i)=>`<button class="secondary" onclick="answer(${i})">${a}</button>`).join("");document.getElementById("testResult").textContent=""}
+function answer(i){if(answered)return;answered=true;let q=questions[qi];if(i===q[2])score++;document.getElementById("testResult").textContent=(i===q[2]?"Correct! ":"Incorrect. ")+q[3];document.querySelectorAll("#answers button").forEach(b=>b.disabled=true)}
+function nextQuestion(){if(!answered)return alert("पहले जवाब चुनें");qi++;if(qi>=questions.length)finishTest();else loadQuestion()}
+function finishTest(){clearInterval(clock);document.getElementById("question").textContent="Test Complete!";document.getElementById("answers").innerHTML="";document.getElementById("testResult").textContent="आपका Score: "+score+"/"+questions.length;localStorage.setItem("np_score",score+"/"+questions.length);document.getElementById("progress").textContent="Last test score: "+score+"/"+questions.length;document.getElementById("nextTest").classList.add("hidden");document.getElementById("startTest").classList.remove("hidden")}
+function searchAll(q){q=q.toLowerCase();if(!q)return;let found=jobs.some(j=>j.title.toLowerCase().includes(q)||j.category.toLowerCase().includes(q));if(found){show("jobs");document.getElementById("jobFilter").value="All";renderJobs();document.getElementById("jobList").innerHTML=jobs.filter(j=>j.title.toLowerCase().includes(q)||j.category.toLowerCase().includes(q)).map(j=>`<div class="card"><b>${j.title}</b><p>${j.category}</p></div>`).join("")}}
+renderOfficial();renderJobs();renderSaved();
 </script>
-</body></html>
+</body>
+</html>
