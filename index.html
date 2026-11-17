@@ -91,6 +91,23 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 #npExamZone .np4-bar{height:9px;border-radius:20px;background:#263d5b;overflow:hidden;margin:12px 0}
 #npExamZone .np4-bar span{display:block;height:100%;background:linear-gradient(90deg,#08a6ff,#00e0bd)}
 
+
+/* NP_PHASE5_ADMIN_STUDENT_V1 */
+#np5Nav{position:fixed;z-index:9999;bottom:15px;left:50%;transform:translateX(-50%);border:1px solid #54d8ff;background:linear-gradient(135deg,#0753a8,#092b59);color:white;padding:11px 17px;border-radius:30px;font-weight:800;box-shadow:0 5px 25px #00aaff55}
+#np5Panel{padding:18px 14px 100px;max-width:1000px;margin:auto;color:inherit}
+.np5-card{background:linear-gradient(145deg,rgba(15,35,67,.96),rgba(7,20,42,.96));border:1px solid #2475a8;border-radius:17px;padding:16px;margin:12px 0;box-shadow:0 8px 24px #00142b55}
+.np5-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.np5-stat{background:#0b2b50;border:1px solid #236c9c;padding:14px;border-radius:14px}
+.np5-stat strong{display:block;font-size:25px;color:#55dfff}
+.np5-field{width:100%;box-sizing:border-box;padding:12px;margin:6px 0 10px;border-radius:10px;border:1px solid #397ca6;background:#071a32;color:white;font-size:15px}
+.np5-btn{border:0;border-radius:10px;padding:11px 14px;margin:4px 3px 4px 0;background:#0878c9;color:white;font-weight:700}
+.np5-btn.alt{background:#17466b}.np5-btn.danger{background:#a93648}
+.np5-item{padding:12px;border:1px solid #24577d;border-radius:12px;margin:9px 0;background:#0b2340}
+.np5-muted{opacity:.75;font-size:13px}
+#np5Panel h2,#np5Panel h3{color:#66dfff}
+#np5Panel label{display:block;font-weight:700;margin-top:8px}
+@media(max-width:420px){#np5Nav{bottom:10px;padding:10px 13px;font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -700,6 +717,184 @@ nav.onclick=function(){
 };
 document.body.appendChild(nav);
 np4Dashboard();
+})();
+</script>
+
+
+<!-- NP_PHASE5_ADMIN_STUDENT_V1 -->
+<section class="section" id="np5Panel" style="display:none">
+  <div class="np5-card">
+    <h2>🚀 NaukriPath Control Center</h2>
+    <p class="np5-muted">Admin tools aur Student progress — local device version</p>
+    <button class="np5-btn" onclick="np5Tab('dashboard')">Student Dashboard</button>
+    <button class="np5-btn" onclick="np5Tab('jobs')">Manage Jobs</button>
+    <button class="np5-btn" onclick="np5Tab('notes')">Manage Notes</button>
+    <button class="np5-btn" onclick="np5Tab('questions')">Manage Questions</button>
+    <button class="np5-btn alt" onclick="np5Tab('backup')">Backup / Restore</button>
+    <button class="np5-btn alt" onclick="np5Home()">← Main Website</button>
+  </div>
+  <div id="np5Content"></div>
+</section>
+<button id="np5Nav" onclick="np5Open()">⚙️ Admin & Dashboard</button>
+
+<script>
+/* NP_PHASE5_ADMIN_STUDENT_V1 */
+(function(){
+"use strict";
+const KEY="naukripath_phase5_content_v1";
+let data={jobs:[],notes:[],questions:[]};
+try{
+ const old=JSON.parse(localStorage.getItem(KEY)||"null");
+ if(old && typeof old==="object"){
+  data.jobs=Array.isArray(old.jobs)?old.jobs:[];
+  data.notes=Array.isArray(old.notes)?old.notes:[];
+  data.questions=Array.isArray(old.questions)?old.questions:[];
+ }
+}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function el(id){return document.getElementById(id);}
+window.np5Open=function(){
+ document.querySelectorAll(".section").forEach(x=>x.style.display="none");
+ el("np5Panel").style.display="block";
+ window.scrollTo(0,0);
+ np5Tab("dashboard");
+};
+window.np5Home=function(){
+ el("np5Panel").style.display="none";
+ if(typeof window.show==="function"){window.show("home");}
+ else{
+  document.querySelectorAll(".section").forEach(x=>x.style.display="none");
+  const h=el("home"); if(h)h.style.display="block";
+ }
+};
+window.np5Tab=function(tab){
+ const c=el("np5Content");
+ if(!c)return;
+ if(tab==="dashboard"){
+  let tests=[];
+  try{
+   Object.keys(localStorage).filter(k=>/history|test/i.test(k)).forEach(k=>{
+    let v=JSON.parse(localStorage.getItem(k)||"null");
+    if(Array.isArray(v))tests=tests.concat(v);
+   });
+  }catch(e){}
+  let saved=0,progress=0;
+  try{
+   Object.keys(localStorage).filter(k=>/saved|progress|study/i.test(k)).forEach(k=>{
+    let v=JSON.parse(localStorage.getItem(k)||"null");
+    if(Array.isArray(v)){if(/saved/i.test(k))saved+=v.length;else progress+=v.length;}
+    else if(v&&typeof v==="object"){if(/saved/i.test(k))saved+=Object.keys(v).length;else progress+=Object.keys(v).length;}
+   });
+  }catch(e){}
+  c.innerHTML=`<div class="np5-card"><h2>🎓 Student Dashboard</h2>
+  <div class="np5-grid">
+   <div class="np5-stat"><strong>${saved}</strong><span>Saved items (detected)</span></div>
+   <div class="np5-stat"><strong>${progress}</strong><span>Study records (detected)</span></div>
+   <div class="np5-stat"><strong>${tests.length}</strong><span>Test history entries (detected)</span></div>
+   <div class="np5-stat"><strong>${data.jobs.length}</strong><span>Your added jobs</span></div>
+   <div class="np5-stat"><strong>${data.notes.length}</strong><span>Your notes</span></div>
+   <div class="np5-stat"><strong>${data.questions.length}</strong><span>Your questions</span></div>
+  </div><p class="np5-muted">Yeh browser mein mile local records ka estimate hai. Alag device par yeh data share nahi hota.</p></div>
+  <div class="np5-card"><h3>📚 Your Content</h3><p>Jobs, Notes aur Questions add karne ke liye upar ke buttons use karo.</p></div>`;
+ }else if(tab==="jobs"){
+  c.innerHTML=`<div class="np5-card"><h2>💼 Job Manager</h2>
+  <label>Job Title</label><input class="np5-field" id="jTitle" placeholder="SSC CGL 2026">
+  <label>Organization</label><input class="np5-field" id="jOrg" placeholder="Staff Selection Commission">
+  <label>Last Date</label><input class="np5-field" id="jDate" placeholder="DD-MM-YYYY">
+  <label>Official Notification / Apply Link</label><input class="np5-field" id="jLink" placeholder="https://...">
+  <label>Short Details</label><textarea class="np5-field" id="jInfo" rows="3" placeholder="Eligibility, posts, details..."></textarea>
+  <button class="np5-btn" onclick="np5Add('jobs')">+ Save Job</button>
+  <p class="np5-muted">Sirf verified official information add karein. Expired dates ko update karein.</p></div>
+  <div class="np5-card"><h3>Added Jobs (${data.jobs.length})</h3><div id="np5Jobs"></div></div>`;
+  np5List("jobs","np5Jobs");
+ }else if(tab==="notes"){
+  c.innerHTML=`<div class="np5-card"><h2>📖 Notes Manager</h2>
+  <label>Class / Exam</label><input class="np5-field" id="nClass" placeholder="Class 12 UP Board / SSC">
+  <label>Subject</label><input class="np5-field" id="nSubject" placeholder="Chemistry">
+  <label>Topic / Chapter</label><input class="np5-field" id="nTitle" placeholder="Electrochemistry">
+  <label>Notes Content</label><textarea class="np5-field" id="nBody" rows="6" placeholder="Apne original notes yahan likhein..."></textarea>
+  <button class="np5-btn" onclick="np5Add('notes')">+ Save Notes</button></div>
+  <div class="np5-card"><h3>Saved Notes (${data.notes.length})</h3><div id="np5Notes"></div></div>`;
+  np5List("notes","np5Notes");
+ }else if(tab==="questions"){
+  c.innerHTML=`<div class="np5-card"><h2>🧠 Question Manager</h2>
+  <label>Exam / Subject</label><input class="np5-field" id="qCategory" placeholder="UPSC / Chemistry">
+  <label>Question</label><textarea class="np5-field" id="qText" rows="3" placeholder="Question likhein"></textarea>
+  <label>Option A</label><input class="np5-field" id="qA" placeholder="Option A">
+  <label>Option B</label><input class="np5-field" id="qB" placeholder="Option B">
+  <label>Option C</label><input class="np5-field" id="qC" placeholder="Option C">
+  <label>Option D</label><input class="np5-field" id="qD" placeholder="Option D">
+  <label>Correct Option</label><select class="np5-field" id="qCorrect"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+  <label>Explanation</label><textarea class="np5-field" id="qExplain" rows="3" placeholder="Answer ka explanation"></textarea>
+  <button class="np5-btn" onclick="np5Add('questions')">+ Save Question</button></div>
+  <div class="np5-card"><h3>Saved Questions (${data.questions.length})</h3><div id="np5Questions"></div></div>`;
+  np5List("questions","np5Questions");
+ }else if(tab==="backup"){
+  c.innerHTML=`<div class="np5-card"><h2>💾 Backup & Restore</h2>
+  <p>Apne Admin content ka backup JSON file mein download karein.</p>
+  <button class="np5-btn" onclick="np5Export()">Download Backup</button>
+  <label>Backup JSON file restore karein</label><input class="np5-field" type="file" id="np5File" accept=".json,application/json">
+  <button class="np5-btn alt" onclick="np5Import()">Restore Backup</button>
+  <p class="np5-muted">Restore karne par current Admin content replace ho jayega. Pehle backup zaroor lein.</p>
+  <button class="np5-btn danger" onclick="np5Clear()">Delete all Admin content</button></div>`;
+ }
+};
+window.np5Add=function(type){
+ let item={id:Date.now()+Math.random().toString(16).slice(2),created:new Date().toISOString()};
+ if(type==="jobs"){
+  item.title=el("jTitle").value.trim();item.org=el("jOrg").value.trim();item.date=el("jDate").value.trim();item.link=el("jLink").value.trim();item.info=el("jInfo").value.trim();
+  if(!item.title||!item.org){alert("Job title aur organization bharo.");return;}
+  if(item.link && !/^https?:\/\//i.test(item.link)){alert("Link https:// se shuru hona chahiye.");return;}
+ }else if(type==="notes"){
+  item.className=el("nClass").value.trim();item.subject=el("nSubject").value.trim();item.title=el("nTitle").value.trim();item.body=el("nBody").value.trim();
+  if(!item.title||!item.body){alert("Topic aur notes content zaroor bharo.");return;}
+ }else{
+  item.category=el("qCategory").value.trim();item.question=el("qText").value.trim();
+  item.options=[el("qA").value.trim(),el("qB").value.trim(),el("qC").value.trim(),el("qD").value.trim()];
+  item.correct=Number(el("qCorrect").value);item.explain=el("qExplain").value.trim();
+  if(!item.question||item.options.some(x=>!x)){alert("Question aur chaaron options bharo.");return;}
+ }
+ data[type].unshift(item);save();np5Tab(type);
+ alert("Content is device par save ho gaya!");
+};
+function np5List(type,id){
+ const box=el(id);if(!box)return;
+ if(!data[type].length){box.innerHTML='<p class="np5-muted">Abhi koi content add nahi hua.</p>';return;}
+ box.innerHTML=data[type].map((x,i)=>{
+  let title=x.title||x.question||"Untitled";
+  let detail=type==="jobs"?(x.org+" • "+x.date):type==="notes"?(x.className+" • "+x.subject):x.category;
+  return `<div class="np5-item"><strong>${esc(title)}</strong><p class="np5-muted">${esc(detail||"")}</p>
+  <button class="np5-btn danger" onclick="np5Delete('${type}',${i})">Delete</button></div>`;
+ }).join("");
+}
+window.np5Delete=function(type,i){
+ if(!confirm("Is item ko delete karna hai?"))return;
+ data[type].splice(i,1);save();np5Tab(type);
+};
+window.np5Export=function(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");
+ a.href=url;a.download="naukripath-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+window.np5Import=function(){
+ const f=el("np5File").files[0];if(!f){alert("Pehle JSON backup file select karo.");return;}
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const v=JSON.parse(r.result);
+   if(!v||!Array.isArray(v.jobs)||!Array.isArray(v.notes)||!Array.isArray(v.questions))throw Error();
+   if(!confirm("Current Admin content replace karke backup restore karein?"))return;
+   data={jobs:v.jobs,notes:v.notes,questions:v.questions};save();np5Tab("dashboard");alert("Backup restore ho gaya.");
+  }catch(e){alert("Yeh valid NaukriPath backup file nahi hai.");}
+ };
+ r.readAsText(f);
+};
+window.np5Clear=function(){
+ if(!confirm("Kya aap sach mein apna poora Admin content delete karna chahte hain?"))return;
+ data={jobs:[],notes:[],questions:[]};save();np5Tab("dashboard");
+};
 })();
 </script>
 
