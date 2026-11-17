@@ -307,12 +307,20 @@ let jobs=JSON.parse(localStorage.getItem("np_jobs")||"null")||demo;
 let saved=JSON.parse(localStorage.getItem("np_saved")||"[]");
 function persist(){localStorage.setItem("np_jobs",JSON.stringify(jobs));localStorage.setItem("np_saved",JSON.stringify(saved))}
 function show(id){
- document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".section").forEach(x=>{
+  x.style.display="";
+  x.classList.remove("active");
+ });
+ const target=document.getElementById(id);
+ if(!target){console.warn("Section not found:",id);return;}
+ target.style.display="";
+ target.classList.add("active");
  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===id));
- if(id==="saved")renderSaved();if(id==="admin")renderAdmin();
+ if(id==="saved")renderSaved();
+ if(id==="admin")renderAdmin();
  window.scrollTo(0,0);
 }
+/* NP_PHASE8_NAVFIX */
 function renderOfficial(){document.getElementById("official").innerHTML=official.map(x=>`<div class="card row"><b>${x[0]}</b><a href="${x[1]}" target="_blank">Official Website ↗</a></div>`).join("")}
 function renderJobs(){
  let f=document.getElementById("jobFilter").value;
