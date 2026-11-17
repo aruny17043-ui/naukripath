@@ -58,6 +58,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 .np-filter{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:380px){.np-filter{grid-template-columns:1fr}}
 
+
+/* NaukriPath Phase 3 */
+#npStudyRoomNav{position:fixed;right:14px;bottom:85px;z-index:9999;border:0;border-radius:30px;padding:13px 18px;background:linear-gradient(120deg,#0878ef,#00b9d5);color:white;font-weight:800;box-shadow:0 8px 25px #0878ef55}
+#npClassroom{padding:18px 14px 110px;min-height:75vh}
+#npClassroom .np-panel{background:rgba(22,42,72,.85);border:1px solid #4775a055;border-radius:16px;padding:15px;margin:12px 0}
+#npClassroom .np-title{font-size:25px;font-weight:900}
+#npClassroom .np-muted{opacity:.75;font-size:13px;line-height:1.6}
+#npClassroom select,#npClassroom input{box-sizing:border-box;width:100%;padding:12px;border-radius:10px;border:1px solid #42658c;background:#10223c;color:white;margin:7px 0 12px}
+#npClassroom button{border:0;border-radius:10px;padding:10px 13px;background:linear-gradient(120deg,#0878ef,#00a9c8);color:white;font-weight:800;margin:4px}
+#npClassroom .np-chapter{padding:12px;border:1px solid #6688aa44;border-radius:12px;margin:8px 0;background:#10223c;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#npClassroom .np-done{border-color:#16c784;background:#0c604522}
+#npClassroom .np-stat{font-size:25px;font-weight:900;color:#62c9ff}
+#npClassroom .np-progress{height:10px;background:#263d5b;border-radius:20px;overflow:hidden;margin:12px 0}
+#npClassroom .np-progress span{display:block;height:100%;background:linear-gradient(90deg,#08a6ff,#00e0bd);width:0}
+#npClassroom .np-note{line-height:1.75;font-size:14px}
+
 </style>
 </head>
 <body>
@@ -389,6 +405,125 @@ window.npRenderHistory=function(){
 
 npRenderBank();
 npRenderHistory();
+</script>
+
+
+<section class="section" id="npClassroom" style="display:none">
+ <div class="np-title">📚 NaukriPath Study Room</div>
+ <p class="np-muted">Choose your class, board and subject. Track your chapter progress.</p>
+ <div class="np-panel">
+  <h3>Study Setup</h3>
+  <label>Class</label><select id="npClassSelect" onchange="npUpdateStudy()"><option value="10">Class 10</option><option value="12">Class 12</option></select>
+  <label>Board</label><select id="npBoardSelect" onchange="npUpdateStudy()"></select>
+  <label>Subject</label><select id="npSubjectSelect" onchange="npUpdateStudy()"></select>
+ </div>
+ <div class="np-panel">
+  <h3>📈 Your Progress</h3>
+  <div style="display:flex;gap:25px;flex-wrap:wrap">
+   <div><div class="np-stat" id="npDoneCount">0</div><small>Completed</small></div>
+   <div><div class="np-stat" id="npTotalCount">0</div><small>Total</small></div>
+   <div><div class="np-stat" id="npPercent">0%</div><small>Progress</small></div>
+  </div>
+  <div class="np-progress"><span id="npProgressBar"></span></div>
+  <p class="np-muted">Progress is saved on this device.</p>
+ </div>
+ <div class="np-panel">
+  <h3>📖 Chapter List</h3>
+  <input id="npChapterSearch" placeholder="Search chapter..." oninput="npRenderChapters()">
+  <div id="npChapterList"></div>
+ </div>
+ <div class="np-panel" id="npChapterNotes">
+  <h3>📝 Chapter Notes</h3>
+  <p class="np-muted">Select Open Notes beside a chapter.</p>
+ </div>
+ <div class="np-panel">
+  <h3>Official Syllabus Links</h3>
+  <p><a href="https://upmsp.edu.in/" target="_blank">UP Board</a></p>
+  <p><a href="https://cbseacademic.nic.in/" target="_blank">CBSE</a></p>
+  <p><a href="https://cisce.org/" target="_blank">CISCE (ICSE/ISC)</a></p>
+  <p><a href="https://ncert.nic.in/" target="_blank">NCERT</a></p>
+  <p class="np-muted">Chapter lists are starter examples, not a verified latest board syllabus. Check your official board syllabus before exam preparation.</p>
+ </div>
+</section>
+
+
+<script>
+/* NP_PHASE3_STUDYROOM */
+(function(){
+"use strict";
+const DATA={
+"10":{
+"Mathematics":["Real Numbers","Polynomials","Pair of Linear Equations","Quadratic Equations","Arithmetic Progressions","Triangles","Coordinate Geometry","Introduction to Trigonometry","Circles","Areas Related to Circles","Surface Areas and Volumes","Statistics and Probability"],
+"Science":["Chemical Reactions and Equations","Acids, Bases and Salts","Metals and Non-metals","Carbon and its Compounds","Life Processes","Control and Coordination","How do Organisms Reproduce?","Heredity","Light","Human Eye","Electricity","Magnetic Effects of Electric Current","Our Environment"],
+"Social Science":["Nationalism in Europe","Nationalism in India","Resources and Development","Water Resources","Agriculture","Minerals and Energy Resources","Power Sharing","Federalism","Political Parties","Development","Sectors of the Indian Economy","Money and Credit"],
+"English":["Reading Skills","Writing Skills","Grammar","Literature"],
+"Hindi":["गद्य","पद्य","व्याकरण","लेखन कौशल","अपठित बोध"]
+},
+"12":{
+"Physics":["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics","Wave Optics","Dual Nature","Atoms","Nuclei","Semiconductor Electronics"],
+"Chemistry":["Solutions","Electrochemistry","Chemical Kinetics","d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules"],
+"Biology":["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology","Organisms and Populations","Ecosystem","Biodiversity"],
+"Mathematics":["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Applications of Derivatives","Integrals","Applications of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"],
+"English":["Reading Skills","Writing Skills","Grammar","Flamingo","Vistas"],
+"Hindi":["गद्य","पद्य","अभिव्यक्ति और माध्यम","लेखन कौशल","अपठित बोध"]
+}};
+const $=id=>document.getElementById(id);
+const KEY="np_phase3_progress_v1";
+let done={};
+try{done=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cl=()=>$("npClassSelect").value;
+const sub=()=>$("npSubjectSelect").value;
+const chapters=()=>(DATA[cl()]||{})[sub()]||[];
+const key=ch=>cl()+"|"+$("npBoardSelect").value+"|"+sub()+"|"+ch;
+
+window.npUpdateStudy=function(){
+ const c=cl(), b=$("npBoardSelect"), s=$("npSubjectSelect");
+ const boards=c==="10"?["UP Board","CBSE","ICSE"]:["UP Board","CBSE","ISC"];
+ const oldB=b.value,oldS=s.value;
+ b.innerHTML=boards.map(x=>"<option>"+x+"</option>").join("");
+ s.innerHTML=Object.keys(DATA[c]).map(x=>"<option>"+esc(x)+"</option>").join("");
+ if(boards.includes(oldB))b.value=oldB;
+ if(DATA[c][oldS])s.value=oldS;
+ $("npChapterSearch").value="";
+ npRenderChapters();
+};
+function progress(){
+ const a=chapters(),n=a.filter(x=>done[key(x)]).length,p=a.length?Math.round(n/a.length*100):0;
+ $("npDoneCount").textContent=n;$("npTotalCount").textContent=a.length;
+ $("npPercent").textContent=p+"%";$("npProgressBar").style.width=p+"%";
+}
+window.npRenderChapters=function(){
+ const q=$("npChapterSearch").value.toLowerCase();
+ const a=chapters().filter(x=>x.toLowerCase().includes(q));
+ $("npChapterList").innerHTML=a.length?a.map((ch,i)=>{
+ const d=!!done[key(ch)];
+ return '<div class="np-chapter '+(d?'np-done':'')+'"><div><b>'+ (i+1)+'. '+esc(ch)+'</b><br><small>'+(d?'✓ Completed':'Not completed')+'</small></div><div><button onclick="npOpenNotes('+JSON.stringify(ch).replace(/"/g,'&quot;')+')">Open Notes</button><button onclick="npToggleDone('+JSON.stringify(ch).replace(/"/g,'&quot;')+')">'+(d?'Undo':'Complete')+'</button></div></div>';
+ }).join(""):'<p>No chapters found.</p>';
+ progress();
+};
+window.npToggleDone=function(ch){
+ const k=key(ch);if(done[k])delete done[k];else done[k]=true;
+ localStorage.setItem(KEY,JSON.stringify(done));npRenderChapters();
+};
+window.npOpenNotes=function(ch){
+ $("npChapterNotes").innerHTML='<h3>📝 '+esc(ch)+'</h3><p><b>Study checklist</b></p><ol><li>Read the chapter carefully from your prescribed textbook.</li><li>Write important definitions and concepts in your own words.</li><li>Practice textbook examples and exercise questions.</li><li>Prepare short and long answer questions.</li><li>Revise the chapter without looking at your notes.</li></ol><p class="np-muted">This is a general study guide, not official chapter notes. Verify topics with your current board textbook and syllabus.</p><button onclick="npToggleDone('+JSON.stringify(ch).replace(/"/g,'&quot;')+')">✓ Mark Complete / Undo</button>';
+ $("npChapterNotes").scrollIntoView({behavior:"smooth",block:"start"});
+};
+const btn=document.createElement("button");
+btn.id="npStudyRoomNav";btn.type="button";btn.textContent="📚 Study Room";
+btn.onclick=function(){
+ if(typeof window.show==="function")window.show("npClassroom");
+ else{
+  document.querySelectorAll(".section").forEach(x=>{x.style.display="none";x.classList.remove("active")});
+  $("npClassroom").style.display="block";
+ }
+ npUpdateStudy();window.scrollTo({top:0,behavior:"smooth"});
+};
+document.body.appendChild(btn);
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",npUpdateStudy);
+else npUpdateStudy();
+})();
 </script>
 
 </body>
