@@ -140,6 +140,20 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 .np7-note{background:repeating-linear-gradient(to bottom,#fff 0px,#fff 30px,#d8e8f6 31px);color:#142c46;border-radius:12px;padding:18px;line-height:1.9;white-space:pre-wrap;border-left:5px solid #2388c7}
 #np7Lab h2,#np7Lab h3{color:#65dfff}
 
+
+/* NP_PYQ_ENGINE_V1 */
+#npPyq{padding:12px 0 30px}
+.npq-hero{padding:20px;border-radius:18px;background:linear-gradient(130deg,#102d62,#087fc4,#087e91);margin-bottom:14px}
+.npq-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.npq-stats .card{margin:0;text-align:center;padding:11px}
+.npq-stats strong{display:block;font-size:21px;color:var(--cyan)}
+.npq-filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.npq-q{line-height:1.65;font-weight:750;font-size:16px}
+.npq-opt{display:block;width:100%;text-align:left;margin:6px 0;background:var(--panel);color:var(--text);border:1px solid var(--line)}
+.npq-answer{background:var(--panel);padding:12px;border-radius:12px;margin-top:9px;line-height:1.7}
+.npq-meta{font-size:11px;color:var(--muted);margin:7px 0}
+@media(max-width:380px){.npq-filters{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -169,6 +183,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   <div class="card tile" onclick="show('gk')"><span class="icon">🌍</span><b>Daily GK</b><small>Knowledge corner</small></div>
   <div class="card tile" onclick="show('saved')"><span class="icon">🔖</span><b>Saved Jobs</b><small>Your bookmarks</small></div>
   <div class="card tile" onclick="show('profile')"><span class="icon">👤</span><b>My Profile</b><small>Student dashboard</small></div>
+  <div class="card tile" onclick="npqOpen()"><span class="icon">📚</span><b>PYQ Question Bank</b><small>UP Board · CBSE · Govt Exams</small></div>
 <div class="card tile" onclick="np6Open()"><span class="icon">🧪</span><b>Chemistry Lab</b><small>Class 12 Notes & Tests</small></div>
  </div>
  <h2>Official Job Portals</h2>
@@ -277,6 +292,50 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </section>
 
 <footer>NaukriPath © 2026 · Learn • Prepare • Succeed<br>Verify every recruitment from its official notification.</footer>
+
+<section id="npPyq" class="section">
+ <div class="npq-hero">
+  <span class="tag">NAUKRIPATH QUESTION BANK</span>
+  <h2>📚 Previous Year Questions</h2>
+  <p>UP Board · CBSE · Government Exams</p>
+  <p>वर्षवार प्रश्न, उत्तर और व्याख्या</p>
+ </div>
+ <div class="npq-stats">
+  <div class="card"><strong id="npqTotal">0</strong><small>Total</small></div>
+  <div class="card"><strong id="npqPyq">0</strong><small>PYQ</small></div>
+  <div class="card"><strong id="npqPractice">0</strong><small>Practice</small></div>
+ </div>
+ <div class="card">
+  <h3>परीक्षा चुनें</h3>
+  <select id="npqCategory" onchange="npqRender()">
+   <option value="All">सभी कैटेगरी</option>
+   <option>UP Board Class 10</option>
+   <option>UP Board Class 12</option>
+   <option>CBSE Class 10</option>
+   <option>CBSE Class 12</option>
+   <option>Government Exams</option>
+  </select>
+  <div class="npq-filters">
+   <select id="npqYear" onchange="npqRender()"><option value="All">सभी साल</option></select>
+   <select id="npqSubject" onchange="npqRender()"><option value="All">सभी विषय</option></select>
+  </div>
+  <input id="npqSearch" placeholder="प्रश्न, अध्याय या विषय खोजें..." oninput="npqRender()">
+  <button style="margin-top:10px;width:100%" onclick="npqStart()">📝 Mock Test शुरू करें</button>
+ </div>
+ <div class="card">
+  <h3>📥 प्रश्नों का पैक जोड़ें</h3>
+  <p class="npq-meta">JSON फाइल से प्रश्न Import करें।</p>
+  <input type="file" id="npqFile" accept=".json,application/json">
+  <button style="margin-top:9px" onclick="npqImport()">Import Questions</button>
+  <button class="secondary" style="margin-top:9px" onclick="npqExport()">Export Question Bank</button>
+ </div>
+ <div id="npqTest" class="card hidden"></div>
+ <h3>प्रश्न सूची</h3>
+ <p class="muted" id="npqCount"></p>
+ <div id="npqList" class="list"></div>
+ <button class="secondary" onclick="show('home')">← Home</button>
+</section>
+
 </main>
 
 <nav>
@@ -1253,6 +1312,101 @@ window.np7Back=function(){
  $("np6Learning").style.display="block";$("np6Learning").classList.add("active");window.scrollTo(0,0);
 };
 np7Change();
+})();
+</script>
+
+
+<script>
+/* NP_PYQ_ENGINE_V1 */
+(function(){
+"use strict";
+const KEY="NAUKRIPATH_PYQ_V1";
+const cats=["UP Board Class 10","UP Board Class 12","CBSE Class 10","CBSE Class 12","Government Exams"];
+const seed=[
+{category:cats[0],subject:"Science",chapter:"Electricity",q:"विद्युत धारा की SI इकाई क्या है?",options:["वोल्ट","एम्पियर","ओम","वाट"],answer:1,explanation:"विद्युत धारा की SI इकाई एम्पियर है।"},
+{category:cats[1],subject:"Chemistry",chapter:"Solutions",q:"25°C पर शुद्ध जल का pH कितना होता है?",options:["0","5","7","14"],answer:2,explanation:"25°C पर शुद्ध जल का pH लगभग 7 होता है।"},
+{category:cats[2],subject:"Mathematics",chapter:"Polynomials",q:"x² - 5x + 6 के शून्यक कौन-से हैं?",options:["1 और 6","2 और 3","-2 और -3","0 और 6"],answer:1,explanation:"x² - 5x + 6 = (x-2)(x-3)।"},
+{category:cats[3],subject:"Physics",chapter:"Electrostatics",q:"विद्युत धारिता की SI इकाई क्या है?",options:["कूलॉम","फैरड","टेस्ला","हेनरी"],answer:1,explanation:"विद्युत धारिता की SI इकाई फैरड है।"},
+{category:cats[4],subject:"Polity",chapter:"Fundamental Rights",q:"संवैधानिक उपचारों का अधिकार किस अनुच्छेद में है?",options:["14","19","21","32"],answer:3,explanation:"अनुच्छेद 32 संवैधानिक उपचारों के अधिकार से संबंधित है।"}
+].map((q,i)=>({...q,id:"npq-starter-"+i,type:"Practice",year:null,source:"NaukriPath Practice"}));
+
+let data;
+try{data=JSON.parse(localStorage.getItem(KEY)||"null")||seed.slice();}catch(e){data=seed.slice();}
+let shown=[],revealed=new Set(),quiz=[],qi=0,score=0,locked=false;
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+function filters(){
+ const ys=[...new Set(data.map(q=>q.year).filter(Boolean))].sort().reverse();
+ const ss=[...new Set(data.map(q=>q.subject).filter(Boolean))].sort();
+ const y=$("npqYear"),v=y.value,sub=$("npqSubject"),sv=sub.value;
+ y.innerHTML='<option value="All">सभी साल</option>'+ys.map(x=>`<option>${esc(x)}</option>`).join("");
+ sub.innerHTML='<option value="All">सभी विषय</option>'+ss.map(x=>`<option>${esc(x)}</option>`).join("");
+ if(ys.includes(v))y.value=v;if(ss.includes(sv))sub.value=sv;
+}
+function render(){
+ const c=$("npqCategory").value,y=$("npqYear").value,s=$("npqSubject").value,t=$("npqSearch").value.toLowerCase().trim();
+ shown=data.filter(q=>(c==="All"||q.category===c)&&(y==="All"||String(q.year)===y)&&(s==="All"||q.subject===s)&&(!t||[q.q,q.chapter,q.subject,q.category].join(" ").toLowerCase().includes(t)));
+ $("npqTotal").textContent=data.length;
+ $("npqPyq").textContent=data.filter(q=>q.type==="PYQ"&&q.year).length;
+ $("npqPractice").textContent=data.filter(q=>q.type!=="PYQ").length;
+ $("npqCount").textContent=shown.length+" प्रश्न मिले";
+ $("npqList").innerHTML=shown.length?shown.map((q,i)=>`<div class="card">
+ <div class="npq-meta">${esc(q.category)} · ${esc(q.subject)} · ${esc(q.chapter||"General")}</div>
+ <span class="tag">${q.type==="PYQ"?"PYQ · "+esc(q.year):"PRACTICE QUESTION"}</span>
+ <p class="npq-q">${i+1}. ${esc(q.q)}</p>
+ ${q.options.map((o,j)=>`<p class="npq-meta">${"ABCD"[j]}. ${esc(o)}</p>`).join("")}
+ <button class="secondary" onclick="npqReveal(${i})">उत्तर देखें</button>
+ ${revealed.has(q.id)?`<div class="npq-answer"><b>सही उत्तर: ${esc(q.options[q.answer])}</b><p>${esc(q.explanation)}</p><small>स्रोत: ${esc(q.source||"उपलब्ध नहीं")}</small></div>`:""}
+ </div>`).join(""):'<div class="card">इस फ़िल्टर में अभी प्रश्न नहीं हैं।</div>';
+}
+window.npqRender=function(){filters();render();};
+window.npqReveal=function(i){let q=shown[i];if(!q)return;revealed.has(q.id)?revealed.delete(q.id):revealed.add(q.id);render();};
+window.npqStart=function(){
+ if(!shown.length){alert("इस कैटेगरी में प्रश्न उपलब्ध नहीं हैं।");return;}
+ quiz=shown.slice().sort(()=>Math.random()-.5).slice(0,Math.min(10,shown.length));
+ qi=0;score=0;locked=false;$("npqTest").classList.remove("hidden");draw();
+ $("npqTest").scrollIntoView({behavior:"smooth"});
+};
+function draw(){
+ let q=quiz[qi];
+ $("npqTest").innerHTML=`<h3>Mock Test · ${qi+1}/${quiz.length}</h3><p class="npq-q">${esc(q.q)}</p>
+ ${q.options.map((o,i)=>`<button class="npq-opt" onclick="npqPick(${i})" ${locked?"disabled":""}>${"ABCD"[i]}. ${esc(o)}</button>`).join("")}
+ <p id="npqFeedback" class="npq-answer"></p><button onclick="npqNext()" ${locked?"":"disabled"}>अगला प्रश्न →</button>`;
+}
+window.npqPick=function(i){
+ if(locked)return;locked=true;let q=quiz[qi];if(i===q.answer)score++;
+ draw();$("npqFeedback").textContent=(i===q.answer?"सही उत्तर! ":"गलत उत्तर। सही उत्तर: "+q.options[q.answer]+". ")+q.explanation;
+};
+window.npqNext=function(){
+ if(!locked)return;qi++;locked=false;
+ if(qi>=quiz.length){$("npqTest").innerHTML=`<h3>टेस्ट पूरा हुआ!</h3><h2>${score} / ${quiz.length}</h2><button onclick="npqStart()">फिर से टेस्ट दें</button>`;}
+ else draw();
+};
+window.npqImport=function(){
+ let f=$("npqFile").files[0];if(!f){alert("पहले JSON फाइल चुनें।");return;}
+ let r=new FileReader();
+ r.onload=function(){try{
+  let parsed=JSON.parse(r.result),arr=Array.isArray(parsed)?parsed:parsed.questions;
+  if(!Array.isArray(arr))throw Error("questions array नहीं मिला");
+  let good=arr.filter(q=>q&&cats.includes(q.category)&&typeof(q.q||q.question)==="string"&&Array.isArray(q.options)&&q.options.length>=2&&Number.isInteger(Number(q.answer))&&Number(q.answer)>=0&&Number(q.answer)<q.options.length);
+  if(!good.length)throw Error("कोई वैध प्रश्न नहीं मिला");
+  good.forEach((q,i)=>data.push({id:"import-"+Date.now()+"-"+i,category:q.category,subject:q.subject||"General",chapter:q.chapter||"",q:q.q||q.question,options:q.options.map(String),answer:Number(q.answer),explanation:q.explanation||"व्याख्या उपलब्ध नहीं",year:q.year?String(q.year):null,type:"Practice",source:q.source||"Imported Practice"}));
+  save();filters();render();alert(good.length+" प्रश्न जोड़े गए।");
+ }catch(e){alert("Import विफल: "+e.message);}};
+ r.readAsText(f);
+};
+window.npqExport=function(){
+ let blob=new Blob([JSON.stringify({questions:data},null,2)],{type:"application/json"});
+ let url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="naukripath-question-bank.json";a.click();URL.revokeObjectURL(url);
+};
+window.npqOpen=function(){
+ document.querySelectorAll(".section").forEach(x=>{x.classList.remove("active");x.style.display="none";});
+ $("npPyq").style.display="block";$("npPyq").classList.add("active");
+ filters();render();window.scrollTo(0,0);
+};
+save();filters();render();
 })();
 </script>
 
