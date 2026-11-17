@@ -108,6 +108,24 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 #np5Panel label{display:block;font-weight:700;margin-top:8px}
 @media(max-width:420px){#np5Nav{bottom:10px;padding:10px 13px;font-size:12px}}
 
+
+/* NP_PHASE6_CHEMISTRY_PACK1 */
+#np6Learning{padding:18px 13px 100px;max-width:1000px;margin:auto}
+.np6-hero{padding:22px;border-radius:20px;background:linear-gradient(135deg,#082d60,#075da5,#06305b);border:1px solid #36c9ff;color:white}
+.np6-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.np6-card{padding:16px;margin:12px 0;border-radius:16px;background:linear-gradient(145deg,#102b4d,#081c35);border:1px solid #28628c;color:#eef8ff}
+.np6-field{width:100%;box-sizing:border-box;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #3983ac;background:#061a31;color:white}
+.np6-btn{padding:11px 15px;border:0;border-radius:10px;background:linear-gradient(120deg,#0876cf,#00a7d9);color:white;font-weight:800;margin:4px 3px}
+.np6-option{display:block;width:100%;text-align:left;padding:13px;margin:8px 0;border-radius:11px;border:1px solid #34749d;background:#0b2847;color:white}
+.np6-option:disabled{opacity:.9}
+.np6-option.correct{border:2px solid #35d69b;background:#104c43}
+.np6-option.wrong{border:2px solid #ff7777;background:#552a39}
+.np6-note{background:repeating-linear-gradient(to bottom,#fff 0px,#fff 30px,#d8e8f6 31px);color:#142c46;border-radius:12px;padding:18px 17px;line-height:1.9;border-left:5px solid #2388c7;white-space:pre-wrap}
+.np6-muted{opacity:.75;font-size:13px}
+.np6-pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#104b76;color:#9be7ff;font-size:12px;margin:3px}
+#np6Learning h2,#np6Learning h3{color:#65dfff}
+#np6Timer{font-size:22px;font-weight:900;color:#65e4ff}
+
 </style>
 </head>
 <body>
@@ -137,6 +155,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   <div class="card tile" onclick="show('gk')"><span class="icon">🌍</span><b>Daily GK</b><small>Knowledge corner</small></div>
   <div class="card tile" onclick="show('saved')"><span class="icon">🔖</span><b>Saved Jobs</b><small>Your bookmarks</small></div>
   <div class="card tile" onclick="show('profile')"><span class="icon">👤</span><b>My Profile</b><small>Student dashboard</small></div>
+<div class="card tile" onclick="np6Open()"><span class="icon">🧪</span><b>Chemistry Lab</b><small>Class 12 Notes & Tests</small></div>
  </div>
  <h2>Official Job Portals</h2>
  <div class="list" id="official"></div>
@@ -895,6 +914,159 @@ window.np5Clear=function(){
  if(!confirm("Kya aap sach mein apna poora Admin content delete karna chahte hain?"))return;
  data={jobs:[],notes:[],questions:[]};save();np5Tab("dashboard");
 };
+})();
+</script>
+
+
+<!-- NP_PHASE6_CHEMISTRY_PACK1 -->
+<section class="section" id="np6Learning" style="display:none">
+ <div class="np6-hero">
+  <span class="np6-pill">NAUKRIPATH LEARNING LAB</span>
+  <h2>🧪 Class 12 Chemistry</h2>
+  <p>Chapter-wise Notes • MCQ Practice • Timed Tests</p>
+  <p class="np6-muted">Content Pack 1 — Hindi + English learning support</p>
+ </div>
+ <div class="np6-grid">
+  <div class="np6-card"><h3 id="np6Total">20</h3><small>MCQ Questions</small></div>
+  <div class="np6-card"><h3>4</h3><small>Chapter Notes</small></div>
+  <div class="np6-card"><h3 id="np6Attempted">0</h3><small>Questions Attempted</small></div>
+ </div>
+ <div class="np6-card">
+  <h3>📖 Chapter Notes</h3>
+  <p class="np6-muted">Notebook-style revision notes. Use your prescribed textbook for complete syllabus coverage.</p>
+  <div id="np6NotesList"></div>
+  <div id="np6NoteView" class="np6-note" style="display:none"></div>
+ </div>
+ <div class="np6-card">
+  <h3>🧠 Chemistry Question Bank</h3>
+  <input id="np6Search" class="np6-field" placeholder="Search question..." oninput="np6RenderBank()">
+  <select id="np6Chapter" class="np6-field" onchange="np6RenderBank()">
+   <option value="All">All Chapters</option>
+   <option>Solutions</option>
+   <option>Electrochemistry</option>
+   <option>Chemical Kinetics</option>
+   <option>Coordination Compounds</option>
+  </select>
+  <div id="np6Bank"></div>
+ </div>
+ <div class="np6-card">
+  <h3>⏱️ Timed Practice Test</h3>
+  <p>10 random questions • 10 minutes • +1 correct • -0.25 wrong</p>
+  <div id="np6Timer">10:00</div>
+  <div id="np6Quiz">
+   <button class="np6-btn" onclick="np6Start()">Start Chemistry Test</button>
+  </div>
+ </div>
+ <div class="np6-card">
+  <h3>📊 Your Chemistry Progress</h3>
+  <div id="np6History">No test completed yet.</div>
+ </div>
+ <button class="np6-btn" onclick="np6Home()">← Back to Home</button>
+</section>
+
+
+<script>
+/* NP_PHASE6_CHEMISTRY_PACK1 */
+(function(){
+"use strict";
+const Q=[
+{c:"Solutions",q:"The SI unit of molality is:",o:["mol kg⁻¹","mol L⁻¹","kg mol⁻¹","mol m⁻³"],a:0,e:"Molality is moles of solute per kilogram of solvent, so its unit is mol kg⁻¹."},
+{c:"Solutions",q:"Which concentration term is independent of temperature?",o:["Molarity","Normality","Molality","Volume percentage"],a:2,e:"Molality depends on masses, which do not change with temperature."},
+{c:"Solutions",q:"For an ideal solution, the enthalpy of mixing is:",o:["Positive","Negative","Zero","Always infinite"],a:2,e:"Ideal solutions have ΔHmix = 0."},
+{c:"Solutions",q:"Raoult's law relates vapour pressure to:",o:["Mole fraction","Mass fraction","Density","Molar mass only"],a:0,e:"For a component, p = x × p° where x is its mole fraction."},
+{c:"Solutions",q:"Which is a colligative property?",o:["Viscosity","Surface tension","Osmotic pressure","Colour"],a:2,e:"Colligative properties depend on the number of solute particles."},
+{c:"Electrochemistry",q:"The SI unit of conductivity is:",o:["S m⁻¹","S mol⁻¹","Ω m","V m⁻¹"],a:0,e:"Conductivity is measured in siemens per metre (S m⁻¹)."},
+{c:"Electrochemistry",q:"At the anode, oxidation takes place in:",o:["Only galvanic cells","Only electrolytic cells","Both types of cells","Neither type"],a:2,e:"Oxidation occurs at the anode in both galvanic and electrolytic cells."},
+{c:"Electrochemistry",q:"The standard electrode potential of the standard hydrogen electrode is:",o:["+1.00 V","0.00 V","-1.00 V","+0.50 V"],a:1,e:"The standard hydrogen electrode is assigned 0.00 V by convention."},
+{c:"Electrochemistry",q:"Faraday's constant is approximately:",o:["965 C mol⁻¹","96500 C mol⁻¹","8.314 C mol⁻¹","6.022 C mol⁻¹"],a:1,e:"One Faraday is approximately 96485 coulombs per mole of electrons."},
+{c:"Electrochemistry",q:"In a galvanic cell, chemical energy is converted into:",o:["Heat only","Electrical energy","Nuclear energy","Light only"],a:1,e:"A galvanic cell produces electrical energy from a spontaneous redox reaction."},
+{c:"Chemical Kinetics",q:"The rate of a chemical reaction generally changes with:",o:["Concentration","Colour only","Container shape only","Name of reactants"],a:0,e:"Reaction rate commonly depends on reactant concentrations, temperature and catalysts."},
+{c:"Chemical Kinetics",q:"The unit of a first-order rate constant is:",o:["mol L⁻¹ s⁻¹","s⁻¹","L mol⁻¹ s⁻¹","mol² L⁻²"],a:1,e:"For a first-order reaction, k has the unit time⁻¹, commonly s⁻¹."},
+{c:"Chemical Kinetics",q:"The half-life of a first-order reaction is:",o:["Directly proportional to initial concentration","Independent of initial concentration","Always zero","Inversely proportional to temperature only"],a:1,e:"t½ = 0.693/k for a first-order reaction."},
+{c:"Chemical Kinetics",q:"A catalyst changes the reaction rate by:",o:["Increasing activation energy","Decreasing activation energy","Changing equilibrium constant","Changing enthalpy"],a:1,e:"A catalyst provides an alternative pathway with lower activation energy."},
+{c:"Chemical Kinetics",q:"The order of a reaction is determined experimentally from:",o:["Balanced equation only","Rate law","Molecular mass","Colour of product"],a:1,e:"Reaction order is obtained from the experimentally determined rate law."},
+{c:"Coordination Compounds",q:"The central metal ion in [Co(NH₃)₆]Cl₃ is:",o:["Co⁺","Co²⁺","Co³⁺","Co⁴⁺"],a:2,e:"NH₃ is neutral and three chloride ions are outside the coordination sphere, so cobalt is +3."},
+{c:"Coordination Compounds",q:"The coordination number of cobalt in [Co(NH₃)₆]³⁺ is:",o:["3","4","6","9"],a:2,e:"Six ammonia ligands are directly bonded to cobalt."},
+{c:"Coordination Compounds",q:"Which ligand is bidentate?",o:["NH₃","H₂O","en (ethane-1,2-diamine)","Cl⁻"],a:2,e:"Ethylenediamine coordinates through two nitrogen donor atoms."},
+{c:"Coordination Compounds",q:"The oxidation state of iron in [Fe(CN)₆]⁴⁻ is:",o:["+2","+3","+4","0"],a:0,e:"Let Fe be x: x + 6(-1) = -4, so x = +2."},
+{c:"Coordination Compounds",q:"The ligand NH₃ is named:",o:["Aqua","Ammine","Carbonyl","Chloro"],a:1,e:"In coordination nomenclature, NH₃ is called ammine."}
+];
+const NOTES=[
+{t:"Solutions",v:"SOLUTIONS — QUICK REVISION\n\n1. Solution: A homogeneous mixture of two or more components.\n2. Molarity (M): Moles of solute / Volume of solution in litres.\n3. Molality (m): Moles of solute / Mass of solvent in kg.\n4. Mole fraction: Moles of a component / Total moles of all components.\n5. Raoult's law: pA = xA × pA° for an ideal solution.\n6. Colligative properties: Relative lowering of vapour pressure, elevation of boiling point, depression of freezing point and osmotic pressure.\n7. Osmotic pressure: π = CRT for dilute solutions.\n8. Important: Molality and mole fraction are temperature independent; molarity depends on volume and temperature.\n\nPractice numerical problems using your current board textbook."},
+{t:"Electrochemistry",v:"ELECTROCHEMISTRY — QUICK REVISION\n\n1. Oxidation occurs at anode; reduction occurs at cathode.\n2. Galvanic cell: Spontaneous chemical reaction produces electrical energy.\n3. Electrolytic cell: Electrical energy drives a non-spontaneous reaction.\n4. Standard hydrogen electrode: E° = 0.00 V by convention.\n5. Cell potential: E°cell = E°cathode − E°anode.\n6. Conductivity (κ): Reciprocal of resistivity.\n7. Molar conductivity: Λm = κ × 1000 / C when κ is in S cm⁻¹ and C in mol L⁻¹.\n8. Faraday constant ≈ 96485 C mol⁻¹.\n9. Nernst equation at 298 K: E = E° − (0.0591/n) log Q.\n\nRemember to check units carefully in numerical questions."},
+{t:"Chemical Kinetics",v:"CHEMICAL KINETICS — QUICK REVISION\n\n1. Rate of reaction: Change in concentration per unit time.\n2. Rate law: Rate = k[A]^m[B]^n.\n3. Order: Sum of powers of concentration terms in the experimentally determined rate law.\n4. Zero-order integrated equation: [A]t = [A]0 − kt.\n5. First-order integrated equation: k = (2.303/t) log([A]0/[A]t).\n6. First-order half-life: t½ = 0.693/k.\n7. Units of k depend on reaction order.\n8. Arrhenius equation: k = A e^(−Ea/RT).\n9. A catalyst lowers activation energy; it does not change the equilibrium constant.\n\nPractise graphs and numerical problems from your prescribed textbook."},
+{t:"Coordination Compounds",v:"COORDINATION COMPOUNDS — QUICK REVISION\n\n1. Coordination entity: Central metal atom/ion surrounded by ligands.\n2. Ligand: Ion or molecule donating an electron pair to the central metal.\n3. Coordination number: Number of donor atoms directly bonded to the metal.\n4. NH₃ = ammine; H₂O = aqua; CO = carbonyl; Cl⁻ = chlorido.\n5. en (ethane-1,2-diamine) is a bidentate ligand.\n6. Oxidation state is calculated using the overall charge and ligand charges.\n7. Common geometries: Coordination number 4 — tetrahedral or square planar; 6 — octahedral.\n8. Isomerism includes ionisation, linkage, coordination and stereoisomerism.\n9. In naming, ligands are generally named alphabetically before the metal.\n\nUse the official textbook rules for complete IUPAC naming practice."}
+];
+const $=id=>document.getElementById(id);
+let quiz=[],pos=0,score=0,wrong=0,skipped=0,selected=-1,timer=null,left=600,attempted=JSON.parse(localStorage.getItem("np6_attempted")||"[]");
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+window.np6Open=function(){
+ document.querySelectorAll(".section").forEach(s=>{s.classList.remove("active");s.style.display="none";});
+ $("np6Learning").style.display="block";$("np6Learning").classList.add("active");
+ window.scrollTo(0,0);np6RenderBank();np6RenderNotes();np6History();
+};
+window.np6Home=function(){
+ document.querySelectorAll(".section").forEach(s=>{s.classList.remove("active");s.style.display="none";});
+ const h=$("home");if(h){h.style.display="block";h.classList.add("active");}
+ window.scrollTo(0,0);
+};
+window.np6RenderNotes=function(){
+ $("np6NotesList").innerHTML=NOTES.map((n,i)=>`<button class="np6-btn" onclick="np6OpenNote(${i})">${esc(n.t)} Notes</button>`).join("");
+};
+window.np6OpenNote=function(i){
+ const box=$("np6NoteView");box.style.display="block";box.textContent=NOTES[i].v;
+ box.scrollIntoView({behavior:"smooth",block:"start"});
+};
+window.np6RenderBank=function(){
+ const q=$("np6Search").value.toLowerCase(),c=$("np6Chapter").value;
+ const list=Q.map((x,i)=>({...x,i})).filter(x=>(c==="All"||x.c===c)&&(x.q.toLowerCase().includes(q)||x.c.toLowerCase().includes(q)));
+ $("np6Bank").innerHTML=list.map(x=>`<div class="np6-card"><span class="np6-pill">${esc(x.c)}</span><b>${esc(x.q)}</b><div>${x.o.map((a,i)=>`<button class="np6-option" onclick="np6Reveal(${x.i},${i},this)">${String.fromCharCode(65+i)}. ${esc(a)}</button>`).join("")}</div><div id="np6Explain${x.i}" class="np6-muted"></div></div>`).join("")||"<p>No matching questions.</p>";
+ $("np6Total").textContent=Q.length;$("np6Attempted").textContent=attempted.length;
+};
+window.np6Reveal=function(qi,oi,btn){
+ const q=Q[qi],box=$("np6Explain"+qi);
+ if(box.dataset.done)return;
+ box.dataset.done="1";attempted.push(qi);localStorage.setItem("np6_attempted",JSON.stringify([...new Set(attempted)]));
+ btn.parentElement.querySelectorAll("button").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("correct");});
+ if(oi!==q.a)btn.classList.add("wrong");
+ box.textContent=(oi===q.a?"Correct. ":"Incorrect. ")+q.e;
+ $("np6Attempted").textContent=new Set(attempted).size;
+};
+function draw(){
+ const q=quiz[pos],area=$("np6Quiz");
+ area.innerHTML=`<p><b>Question ${pos+1} / ${quiz.length}</b> · ${esc(q.c)}</p><h3>${esc(q.q)}</h3><div id="np6Options"></div><div id="np6Feedback"></div><button class="np6-btn" id="np6Next" disabled onclick="np6Next()">Next Question →</button>`;
+ q.o.forEach((o,i)=>{const b=document.createElement("button");b.className="np6-option";b.textContent=String.fromCharCode(65+i)+". "+o;b.onclick=()=>choose(i);$("np6Options").appendChild(b);});
+}
+function choose(i){
+ if(selected!==-1)return;selected=i;const q=quiz[pos];
+ if(i===q.a)score++;else wrong++;
+ document.querySelectorAll("#np6Options button").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add("correct");if(j===i&&i!==q.a)b.classList.add("wrong");});
+ $("np6Feedback").textContent=(i===q.a?"Correct! ":"Incorrect. ")+q.e;
+ $("np6Next").disabled=false;
+}
+window.np6Start=function(){
+ clearInterval(timer);quiz=[...Q].sort(()=>Math.random()-.5).slice(0,10);pos=0;score=0;wrong=0;skipped=0;selected=-1;left=600;draw();tick();timer=setInterval(tick,1000);
+};
+function tick(){const m=Math.floor(left/60),s=left%60;$("np6Timer").textContent=m+":"+String(s).padStart(2,"0");if(left<=0){finish();return;}left--;}
+window.np6Next=function(){
+ if(selected===-1)return;
+ pos++;selected=-1;if(pos>=quiz.length)finish();else draw();
+};
+function finish(){
+ clearInterval(timer);timer=null;
+ if(pos<quiz.length-1&&selected===-1)skipped=quiz.length-pos;
+ const total=quiz.length,marks=Math.max(0,score-wrong*.25);
+ const rec={date:new Date().toLocaleString(),score:score,wrong:wrong,skipped:skipped,marks:marks.toFixed(2),total:total};
+ let h=JSON.parse(localStorage.getItem("np6_history")||"[]");h.unshift(rec);localStorage.setItem("np6_history",JSON.stringify(h.slice(0,30)));
+ $("np6Quiz").innerHTML=`<h3>Test Completed</h3><p>Correct: ${score} · Wrong: ${wrong} · Unattempted: ${skipped}</p><h2>${rec.marks} / ${total}</h2><p>${Math.round(marks/total*100)}% score</p><button class="np6-btn" onclick="np6Start()">Try Again</button>`;
+ np6History();
+}
+window.np6History=function(){
+ const h=JSON.parse(localStorage.getItem("np6_history")||"[]");
+ $("np6History").innerHTML=h.length?h.slice(0,8).map(x=>`<p>${esc(x.date)} — <b>${x.marks}/${x.total}</b> · Correct ${x.score} · Wrong ${x.wrong}</p>`).join(""):"No test completed yet.";
+};
+$("np6Total").textContent=Q.length;$("np6Attempted").textContent=attempted.length;
+np6RenderBank();np6RenderNotes();np6History();
 })();
 </script>
 
