@@ -43,6 +43,21 @@ nav button.active{color:var(--cyan);background:var(--card)}
 .hidden{display:none}
 button:disabled{opacity:.5}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+
+/* NP_PHASE2_V1 */
+.np-wrap{display:grid;gap:12px}
+.np-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.np-stat .card{text-align:center;margin:0;padding:12px}
+.np-stat strong{display:block;font-size:22px;color:var(--cyan)}
+.np-q{font-size:17px;line-height:1.6;font-weight:750}
+.np-option{width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);color:var(--text);margin:4px 0}
+.np-option.selected{border:2px solid var(--cyan);background:#123d5c}
+.np-option:disabled{opacity:1}
+.np-explain{padding:12px;background:var(--panel);border-radius:12px;color:var(--muted);margin-top:10px}
+.np-small{font-size:12px;color:var(--muted)}
+.np-filter{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:380px){.np-filter{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -105,17 +120,24 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
  <div class="card">UP Board – <a href="https://upmsp.edu.in/" target="_blank">Official Website</a></div>
  </section>
 
+
 <section id="tests" class="section">
- <h2>📝 Practice Mock Test</h2>
+ <h2>🏆 Advanced Mock Test</h2>
  <div class="card">
-  <div class="row"><b>General Knowledge Quiz</b><span class="tag" id="timer">05:00</span></div>
-  <p id="question">Start दबाकर टेस्ट शुरू करें।</p>
-  <div id="answers" class="list"></div>
-  <p id="testResult" class="muted"></p>
-  <button id="startTest" onclick="startTest()">Start Test</button>
-  <button id="nextTest" class="hidden" onclick="nextQuestion()">Next Question</button>
+  <span class="tag">PRACTICE MODE</span>
+  <h3>General Knowledge Test</h3>
+  <p class="muted">10 प्रश्न · 10 मिनट · सही उत्तर +1 · गलत उत्तर -0.25</p>
+  <button onclick="npStartMock()">Start New Test</button>
+ </div>
+ <div id="npTestArea" class="card">
+  <p class="muted">टेस्ट शुरू करने के लिए ऊपर बटन दबाएँ।</p>
+ </div>
+ <div class="card">
+  <h3>📊 Test History</h3>
+  <div id="npHistory" class="muted">अभी कोई टेस्ट रिकॉर्ड नहीं है।</div>
  </div>
 </section>
+
 
 <section id="gk" class="section">
  <h2>🌍 Daily GK</h2>
@@ -124,6 +146,26 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
  <p class="muted">ये सामान्य ज्ञान के उदाहरण हैं, आज की सत्यापित Current Affairs नहीं।</p>
  <a href="https://pib.gov.in/" target="_blank">Official PIB News</a>
  </section>
+
+
+<section id="bank" class="section">
+ <h2>🧠 GK Question Bank</h2>
+ <p class="muted">विषय के अनुसार अभ्यास करें और उत्तर की व्याख्या पढ़ें।</p>
+ <div class="np-stat">
+  <div class="card"><strong id="npTotal">20</strong><small>Questions</small></div>
+  <div class="card"><strong id="npTopics">6</strong><small>Topics</small></div>
+  <div class="card"><strong id="npDone">0</strong><small>Attempted</small></div>
+ </div>
+ <div class="np-filter">
+  <input id="npSearch" placeholder="प्रश्न खोजें..." oninput="npRenderBank()">
+  <select id="npCategory" onchange="npRenderBank()">
+   <option value="All">सभी विषय</option>
+   <option>Polity</option><option>Geography</option><option>Science</option>
+   <option>History</option><option>Economy</option><option>GK</option>
+  </select>
+ </div>
+ <div id="npBankList" class="np-wrap"></div>
+</section>
 
 <section id="saved" class="section"><h2>🔖 Saved Jobs</h2><div id="savedList" class="list"></div></section>
 
@@ -158,7 +200,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
  <button class="active" data-page="home" onclick="show('home')">⌂<br>Home</button>
  <button data-page="jobs" onclick="show('jobs')">💼<br>Jobs</button>
  <button data-page="study" onclick="show('study')">📚<br>Study</button>
- <button data-page="tests" onclick="show('tests')">📝<br>Tests</button>
+ <button data-page="tests" onclick="show('tests')">📝<br>Tests</button><button data-page="bank" onclick="show('bank')">🧠<br>GK Bank</button>
  <button data-page="profile" onclick="show('profile')">👤<br>Profile</button>
  <button data-page="admin" onclick="show('admin')">⚙️<br>Manage</button>
 </nav>
@@ -221,5 +263,133 @@ function finishTest(){clearInterval(clock);document.getElementById("question").t
 function searchAll(q){q=q.toLowerCase();if(!q)return;let found=jobs.some(j=>j.title.toLowerCase().includes(q)||j.category.toLowerCase().includes(q));if(found){show("jobs");document.getElementById("jobFilter").value="All";renderJobs();document.getElementById("jobList").innerHTML=jobs.filter(j=>j.title.toLowerCase().includes(q)||j.category.toLowerCase().includes(q)).map(j=>`<div class="card"><b>${j.title}</b><p>${j.category}</p></div>`).join("")}}
 renderOfficial();renderJobs();renderSaved();
 </script>
+
+<script>
+/* NP_PHASE2_V1 */
+window.NP_BANK = [["भारत का संविधान कब लागू हुआ?", ["15 अगस्त 1947", "26 जनवरी 1950", "26 नवंबर 1949", "2 अक्टूबर 1950"], 1, "भारतीय संविधान 26 जनवरी 1950 को लागू हुआ।", "Polity"], ["संविधान सभा ने संविधान कब अपनाया?", ["26 जनवरी 1950", "15 अगस्त 1947", "26 नवंबर 1949", "2 अक्टूबर 1950"], 2, "संविधान 26 नवंबर 1949 को अपनाया गया था।", "Polity"], ["भारत के प्रथम राष्ट्रपति कौन थे?", ["जवाहरलाल नेहरू", "डॉ. राजेंद्र प्रसाद", "सरदार पटेल", "डॉ. राधाकृष्णन"], 1, "डॉ. राजेंद्र प्रसाद भारत के प्रथम राष्ट्रपति थे।", "Polity"], ["मौलिक अधिकार संविधान के किस भाग में हैं?", ["भाग I", "भाग II", "भाग III", "भाग IV"], 2, "मौलिक अधिकार भाग III में दिए गए हैं।", "Polity"], ["भारत का राष्ट्रीय पशु कौन है?", ["एशियाई शेर", "बंगाल टाइगर", "हाथी", "हिम तेंदुआ"], 1, "भारत का राष्ट्रीय पशु बाघ है।", "GK"], ["भारत की राजधानी क्या है?", ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], 1, "भारत की राजधानी नई दिल्ली है।", "Geography"], ["क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य कौन सा है?", ["उत्तर प्रदेश", "मध्य प्रदेश", "राजस्थान", "महाराष्ट्र"], 2, "राजस्थान क्षेत्रफल की दृष्टि से सबसे बड़ा राज्य है।", "Geography"], ["भारत की सबसे लंबी नदी कौन सी है?", ["गोदावरी", "गंगा", "नर्मदा", "कावेरी"], 1, "भारत में बहने वाली सबसे लंबी नदी गंगा है।", "Geography"], ["कर्क रेखा भारत के कितने राज्यों से गुजरती है?", ["6", "7", "8", "9"], 2, "कर्क रेखा भारत के 8 राज्यों से गुजरती है।", "Geography"], ["सौरमंडल का सबसे बड़ा ग्रह कौन है?", ["पृथ्वी", "मंगल", "बृहस्पति", "शनि"], 2, "बृहस्पति सौरमंडल का सबसे बड़ा ग्रह है।", "Science"], ["पानी का रासायनिक सूत्र क्या है?", ["CO2", "H2O", "O2", "NaCl"], 1, "पानी का रासायनिक सूत्र H2O है।", "Science"], ["मानव शरीर में रक्त पंप करने वाला अंग कौन सा है?", ["फेफड़ा", "यकृत", "हृदय", "गुर्दा"], 2, "हृदय रक्त को पूरे शरीर में पंप करता है।", "Science"], ["विटामिन C की कमी से कौन सा रोग होता है?", ["रिकेट्स", "स्कर्वी", "बेरी-बेरी", "रतौंधी"], 1, "विटामिन C की कमी से स्कर्वी होता है।", "Science"], ["प्रकाश संश्लेषण में पौधे कौन सी गैस लेते हैं?", ["ऑक्सीजन", "नाइट्रोजन", "कार्बन डाइऑक्साइड", "हाइड्रोजन"], 2, "प्रकाश संश्लेषण में पौधे कार्बन डाइऑक्साइड लेते हैं।", "Science"], ["भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?", ["1930", "1942", "1947", "1920"], 1, "भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।", "History"], ["दांडी मार्च किस वर्ष हुआ?", ["1920", "1928", "1930", "1942"], 2, "महात्मा गांधी ने 1930 में दांडी मार्च किया।", "History"], ["भारत के प्रथम प्रधानमंत्री कौन थे?", ["महात्मा गांधी", "जवाहरलाल नेहरू", "लाल बहादुर शास्त्री", "राजेंद्र प्रसाद"], 1, "जवाहरलाल नेहरू भारत के प्रथम प्रधानमंत्री थे।", "History"], ["ताजमहल किसने बनवाया था?", ["अकबर", "बाबर", "शाहजहाँ", "जहाँगीर"], 2, "ताजमहल का निर्माण मुगल बादशाह शाहजहाँ ने करवाया।", "History"], ["भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई?", ["1935", "1947", "1950", "1921"], 0, "RBI की स्थापना 1 अप्रैल 1935 को हुई थी।", "Economy"], ["भारत में हरित क्रांति मुख्यतः किससे संबंधित है?", ["दूध उत्पादन", "खाद्यान्न उत्पादन", "मछली उत्पादन", "तेल उत्पादन"], 1, "हरित क्रांति का संबंध खाद्यान्न उत्पादन बढ़ाने से है।", "Economy"]];
+window.npAttempted = JSON.parse(localStorage.getItem("np_attempted") || "[]");
+window.npMockState = null;
+window.npClock = null;
+
+window.npRenderBank = function(){
+ const q=(document.getElementById("npSearch").value||"").toLowerCase();
+ const cat=document.getElementById("npCategory").value;
+ const list=window.NP_BANK.map((x,i)=>({x,i})).filter(o=>
+  (cat==="All"||o.x[4]===cat) && o.x[0].toLowerCase().includes(q)
+ );
+ document.getElementById("npBankList").innerHTML=list.map(({x,i})=>{
+  const opts=x[1].map((a,j)=>`<button class="np-option" onclick="npReveal(${i},${j},this)">${String.fromCharCode(65+j)}. ${a}</button>`).join("");
+  return `<div class="card"><span class="tag">${x[4]}</span><p class="np-q">${i+1}. ${x[0]}</p><div>${opts}</div><div id="npExplain${i}" class="np-explain hidden"></div></div>`;
+ }).join("") || "<p class='muted'>कोई प्रश्न नहीं मिला।</p>";
+ document.getElementById("npTotal").textContent=window.NP_BANK.length;
+ document.getElementById("npTopics").textContent=new Set(window.NP_BANK.map(x=>x[4])).size;
+ document.getElementById("npDone").textContent=window.npAttempted.length;
+};
+
+window.npReveal=function(i,j,btn){
+ const x=window.NP_BANK[i];
+ const box=document.getElementById("npExplain"+i);
+ if(box.dataset.done)return;
+ box.dataset.done="1";
+ window.npAttempted.push(i);
+ localStorage.setItem("np_attempted",JSON.stringify([...new Set(window.npAttempted)]));
+ const correct=j===x[2];
+ box.classList.remove("hidden");
+ box.innerHTML=(correct?"<b>✅ सही उत्तर!</b>":"<b>❌ सही उत्तर: "+x[1][x[2]]+"</b>")+"<br>"+x[3];
+ btn.parentElement.querySelectorAll("button").forEach((b,k)=>{
+  b.disabled=true;
+  if(k===x[2])b.classList.add("selected");
+ });
+ document.getElementById("npDone").textContent=new Set(window.npAttempted).size;
+};
+
+window.npStartMock=function(){
+ clearInterval(window.npClock);
+ const chosen=[...window.NP_BANK].sort(()=>Math.random()-.5).slice(0,10);
+ window.npMockState={chosen,index:0,answers:[],seconds:600,locked:false};
+ npShowMockQuestion();
+ window.npClock=setInterval(()=>{
+  const s=window.npMockState;
+  if(!s)return;
+  s.seconds--;
+  const t=document.getElementById("npTimer");
+  if(t)t.textContent=Math.floor(s.seconds/60)+":"+String(s.seconds%60).padStart(2,"0");
+  if(s.seconds<=0)npFinishMock();
+ },1000);
+};
+
+window.npShowMockQuestion=function(){
+ const s=window.npMockState;
+ if(!s)return;
+ s.locked=false;
+ const x=s.chosen[s.index];
+ document.getElementById("npTestArea").innerHTML=`
+ <div class="row"><span class="tag">Question ${s.index+1}/10</span><b id="npTimer">10:00</b></div>
+ <p class="np-q">${x[0]}</p>
+ <div id="npMockOptions">${x[1].map((a,j)=>`<button class="np-option" onclick="npChooseAnswer(${j})">${String.fromCharCode(65+j)}. ${a}</button>`).join("")}</div>
+ <div id="npMockFeedback" class="np-explain hidden"></div>
+ <button id="npNext" class="hidden" style="margin-top:12px" onclick="npNextMock()">${s.index===9?"Finish Test":"Next Question →"}</button>
+ <p class="np-small">Unanswered questions receive 0 marks. Wrong answer: -0.25.</p>`;
+ document.getElementById("npTimer").textContent=Math.floor(s.seconds/60)+":"+String(s.seconds%60).padStart(2,"0");
+};
+
+window.npChooseAnswer=function(j){
+ const s=window.npMockState;
+ if(!s||s.locked)return;
+ s.locked=true;
+ const x=s.chosen[s.index],correct=j===x[2];
+ s.answers[s.index]={choice:j,correct};
+ document.querySelectorAll("#npMockOptions button").forEach((b,k)=>{
+  b.disabled=true;
+  if(k===x[2])b.classList.add("selected");
+ });
+ const f=document.getElementById("npMockFeedback");
+ f.classList.remove("hidden");
+ f.innerHTML=(correct?"✅ सही उत्तर!":"❌ गलत उत्तर। सही उत्तर: "+x[1][x[2]])+"<br>"+x[3];
+ document.getElementById("npNext").classList.remove("hidden");
+};
+
+window.npNextMock=function(){
+ const s=window.npMockState;
+ if(!s)return;
+ if(s.index===9){npFinishMock();return;}
+ s.index++;
+ npShowMockQuestion();
+};
+
+window.npFinishMock=function(){
+ const s=window.npMockState;
+ if(!s)return;
+ clearInterval(window.npClock);
+ const correct=s.answers.filter(a=>a&&a.correct).length;
+ const wrong=s.answers.filter(a=>a&&!a.correct).length;
+ const skipped=10-correct-wrong;
+ const score=Math.max(0,correct-wrong*.25);
+ const history=JSON.parse(localStorage.getItem("np_mock_history")||"[]");
+ history.unshift({date:new Date().toLocaleString("en-IN"),correct,wrong,skipped,score:score.toFixed(2)});
+ localStorage.setItem("np_mock_history",JSON.stringify(history.slice(0,20)));
+ window.npMockState=null;
+ document.getElementById("npTestArea").innerHTML=`
+ <h3>🎉 Test Complete!</h3>
+ <div class="np-stat">
+ <div class="card"><strong>${score.toFixed(2)}</strong><small>Score / 10</small></div>
+ <div class="card"><strong>${correct}</strong><small>Correct</small></div>
+ <div class="card"><strong>${wrong}</strong><small>Wrong</small></div>
+ </div><p class="muted">Skipped: ${skipped} · Negative marking: 0.25</p>
+ <button onclick="npStartMock()">Try Again</button>`;
+ npRenderHistory();
+};
+
+window.npRenderHistory=function(){
+ const h=JSON.parse(localStorage.getItem("np_mock_history")||"[]");
+ document.getElementById("npHistory").innerHTML=h.length?h.map(x=>
+ `<div class="card"><b>${x.score}/10</b> · सही ${x.correct} · गलत ${x.wrong} · छोड़े ${x.skipped}<br><small>${x.date}</small></div>`
+ ).join(""):"अभी कोई टेस्ट रिकॉर्ड नहीं है।";
+};
+
+npRenderBank();
+npRenderHistory();
+</script>
+
 </body>
 </html>
